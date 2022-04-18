@@ -18,6 +18,4 @@ int isPalindrome(int a){
 	}
 	return a==checker || a==checker/10;
 	
-	
-	
 }
