@@ -15,7 +15,7 @@ struct point {
 };
 double distance(point a, point b){
     double d;
-    d=sqrt((b.x-a.x)*(b.x-a.x)-(b.y-a.y)*(b.y-a.y));
+    d=sqrt((b.x-a.x)*(b.x-a.x)+(b.y-a.y)*(b.y-a.y));
     return d;
 }
 int main()
