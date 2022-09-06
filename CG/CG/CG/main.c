@@ -13,10 +13,11 @@
 #include <GL/glut.h>
 #endif
 
- 
+#define PI 3.141592654
 
 
 #include <stdlib.h>
+#include <math.h>
 
  
 
@@ -185,6 +186,26 @@ static void display(void)
     glVertex2f(0.3, 0.75);
     glVertex2f(-0.05, 0.85);
     glEnd();
+    
+    
+    int count;
+    for(count=40;count<140;count++){
+        double arg = count, x,y;
+
+           // Converting to radian
+           arg = (arg * PI) / 180;
+            x = (cos(arg)-0.05)*0.5;
+            y = sin(arg)-0.35;
+
+
+        
+        glBegin(GL_QUADS);
+        glVertex2f(x, y);
+        glVertex2f(x, y+0.05);
+        glVertex2f(x+0.05, y+0.05);
+        glVertex2f(x+0.05, y);
+        glEnd();
+    }
 
     
     
