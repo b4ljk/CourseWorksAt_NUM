@@ -174,31 +174,30 @@ static void display(void)
     
     
     glBegin(GL_QUADS);
-    glVertex2f(-0.05, 0.98);
-    glVertex2f(0.00, 0.98);
-    glVertex2f(0.00, 0.65);
-    glVertex2f(-0.05, 0.65);
+    glVertex2f(-0.02, 0.98);
+    glVertex2f(0.02, 0.98);
+    glVertex2f(0.02, 0.65);
+    glVertex2f(-0.02, 0.65);
     glEnd();
     
     glBegin(GL_QUADS);
-    glVertex2f(-0.05, 1.0);
-    glVertex2f(0.3, 0.90);
-    glVertex2f(0.3, 0.75);
-    glVertex2f(-0.05, 0.85);
+    glVertex2f(-0.02, 1.0);
+    glVertex2f(0.25, 0.90);
+    glVertex2f(0.25, 0.75);
+    glVertex2f(-0.02, 0.85);
     glEnd();
     
     
-    int count;
-    for(count=40;count<140;count++){
+    double count;
+    for(count=40;count<140;count+=0.3){
         double arg = count, x,y;
 
            // Converting to radian
            arg = (arg * PI) / 180;
-            x = (cos(arg)-0.05)*0.5;
+            x = (cos(arg)-0.05)*0.45;
             y = sin(arg)-0.35;
 
 
-        
         glBegin(GL_QUADS);
         glVertex2f(x, y);
         glVertex2f(x, y+0.05);
