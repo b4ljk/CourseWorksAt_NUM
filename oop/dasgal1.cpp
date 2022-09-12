@@ -32,7 +32,10 @@ int max(int a, int b, int c)
 }
 int main()
 {
-    cout << max(1, 2, 3) << endl;
+    int a, b, c;
+    cin >> "too oruul";
+    cin >> a >> b >> c;
+    cout << max(a, b, c) << endl;
 
     return 0;
 }

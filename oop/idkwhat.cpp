@@ -1,42 +1,37 @@
 
 #include <iostream>
-
+#include <math.h>
 using namespace std;
 
-int make_set(int A[], int n, int B[])
+void printPrime(int num)
 {
-    int i, j, c, k = 0;
-    for (i = 0; i < n; i++)
+    int i, j, isPrime, counts = 0;
+    i = 2;
+    while (counts < num)
     {
-        c = 0;
-        for (j = 0; j < k; j++)
+        isPrime = 1;
+        for (j = 2; j <= ceil(sqrt(i)); j++)
         {
-            if (A[i] == B[j])
+            if (i % j == 0 && i != j)
             {
-                c = 1;
+                isPrime = 0;
                 break;
             }
         }
-        if (c == 0)
+        if (isPrime == 1)
         {
-            B[k] = A[i];
-            k++;
+            counts++;
+            cout << i << endl;
+            i++;
+        }
+        else
+        {
+            i++;
         }
     }
-    return k;
 }
 
 int main()
 {
-    cout << "husnegtiin hemjeeg oruul\n";
-    int sizeArr;
-    cin >> sizeArr;
-    int A[sizeArr];
-    int B[sizeArr];
-    for (int i = 0; i < sizeArr; i++)
-    {
-        cin >> A[i];
-    }
-    cout << "Ylgaatai element : " << make_set(A, sizeof(A) / sizeof(int), B) << endl;
-    return 0;
+    printPrime(10);
 }
