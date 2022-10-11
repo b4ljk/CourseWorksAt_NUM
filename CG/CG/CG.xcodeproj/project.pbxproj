@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2DA7C44728C604F60078A2BA /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DA7C44628C604F60078A2BA /* main.c */; };
+		FF435E7A28F427D400717E7B /* compgrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF435E7928F427D400717E7B /* compgrap.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +26,7 @@
 /* Begin PBXFileReference section */
 		2DA7C44328C604F60078A2BA /* CG */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CG; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DA7C44628C604F60078A2BA /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		FF435E7928F427D400717E7B /* compgrap.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = compgrap.cpp; path = ../lab5/compgrap.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +43,7 @@
 		2DA7C43A28C604F60078A2BA = {
 			isa = PBXGroup;
 			children = (
+				FF435E7928F427D400717E7B /* compgrap.cpp */,
 				2DA7C44528C604F60078A2BA /* CG */,
 				2DA7C44428C604F60078A2BA /* Products */,
 			);
@@ -119,6 +122,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF435E7A28F427D400717E7B /* compgrap.cpp in Sources */,
 				2DA7C44728C604F60078A2BA /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
