@@ -14,13 +14,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-#define pi 3.1415926
-int radius = 0;
-float dt = 0.1;
-float globalTimeChange = -0.1;
-int globalBoolean = 0;
 #include "DS.h"
-
+float globalTime = 0.0;
+float prevGlobalTime = 0.0;
 /* GLUT callback Handlers */
 // point struct
 
@@ -71,15 +67,9 @@ void drawPoints(point *points, int numPoints)
     }
 }
 
-// calculate collision using heap then draw the points
-void drawCollision(point *points, int numPoints)
+void calculateCollision(point *points, int numPoints)
 {
-    // collision
-    // create heap
-    heap->heap.len = 0;
-    // create array of messages
     Msg messages;
-    // create array of messages
     for (int i = 0; i < numPoints; i++)
     {
         messages.a = &points[i];
@@ -88,29 +78,94 @@ void drawCollision(point *points, int numPoints)
         float timeY = (points[i].speedY > 0) ? (100 - points[i].y - points[i].radius / 2) / points[i].speedY : (-100 - (points[i].y - points[i].radius / 2)) / points[i].speedY;
         if (timeX > timeY)
         {
+            messages.collisionTime = timeY;
+            messages.whichWall = 1;
             if (timeY < 0)
             {
-                messages.collisionTime = timeY;
+
                 points[i].speedY = -points[i].speedY;
             }
         }
         else
         {
+            messages.collisionTime = timeX;
+            messages.whichWall = 0;
             if (timeX < 0)
             {
-                messages.collisionTime = timeX;
+
                 points[i].speedX = -points[i].speedX;
             }
         }
         if (i == 0)
         {
-            printf("%f\t%f\t%f\n", timeY, points[i].speedY);
+            printf("%f\t%f\t%f\n", messages.collisionTime, points[i].speedY);
         }
 
-        // insert(heap, messages);
+        insert(heap, messages);
     }
-    // insert messages into heap
+}
 
+// calculate collision using heap then draw the points
+void drawCollision(point *points, int numPoints)
+{
+    // collision
+    // create heap
+    // create array of messages
+
+    // create array of messages
+
+    // insert messages into heap
+    // calculateCollision(points, numPoints);
+    globalTime -= 1;
+    printf("%f\t%d\n", globalTime, heap->heap.len);
+    if (globalTime < 0)
+    {
+        Msg *temp;
+        temp = &heap->heap.a[0];
+        int wall = heap->heap.a[0].whichWall;
+        if (wall == 0)
+        {
+            // X wall
+            heap->heap.a[0].a->speedX = -heap->heap.a[0].a->speedX;
+        }
+        else
+        {
+            // Y wall
+            heap->heap.a[0].a->speedY = -heap->heap.a[0].a->speedY;
+        }
+
+        //
+        float timeX = (temp->a->speedX > 0) ? (100 - temp->a->x - temp->a->radius / 2) / temp->a->speedX : (-100 - (temp->a->x - temp->a->radius / 2)) / temp->a->speedX;
+        float timeY = (temp->a->speedY > 0) ? (100 - temp->a->y - temp->a->radius / 2) / temp->a->speedY : (-100 - (temp->a->y - temp->a->radius / 2)) / temp->a->speedY;
+        if (timeX > timeY)
+        {
+            temp->collisionTime = timeY;
+            temp->whichWall = 1;
+            if (timeY < 0)
+            {
+
+                temp->a->speedY = -temp->a->speedY;
+            }
+        }
+        else
+        {
+            temp->collisionTime = timeX;
+            temp->whichWall = 0;
+            if (timeX < 0)
+            {
+
+                temp->a->speedX = -temp->a->speedX;
+            }
+        }
+        for (int index = 1; index < heap->heap.len; index++)
+        {
+            heap->heap.a[index].collisionTime -= prevGlobalTime;
+        }
+        sink(heap, 0);
+        prevGlobalTime = heap->heap.a[0].collisionTime;
+        globalTime = heap->heap.a[0].collisionTime;
+        //
+    }
     glColor3f(1.0, 0.0, 0.0);
     for (int i = 0; i < numPoints; i++)
     {
@@ -121,23 +176,6 @@ void drawCollision(point *points, int numPoints)
         points[i].y += points[i].speedY;
         glEnd();
     }
-    // draw collision
-    // glColor3f(0.0, 1.0, 0.0);
-    // for (int i = 0; i < numPoints; i++)
-    // {
-    //     Msg msg = delMin(heap);
-    //     if (msg.collisionTime == 0)
-    //     {
-    //         continue;
-    //     }
-    //     else
-    //     {
-    //         glPointSize(msg.a->radius);
-    //         glBegin(GL_POINTS);
-    //         glVertex2f(msg.a->x, msg.a->y);
-    //         glEnd();
-    //     }
-    // }
 }
 
 void reshape(int w, int h)
@@ -156,13 +194,13 @@ static void display(void)
     // glColor3d(1,0,0);
     //    glCLear(GL_COLOR_BUFFER_BIT);
     glClear(GL_COLOR_BUFFER_BIT);
-    globalTimeChange += dt;
-    drawCollision(arrayOfPoints, 500);
+    drawCollision(arrayOfPoints, 10000);
     glutSwapBuffers();
 }
 
 void init()
 {
+    heap->heap.len = 0;
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     reshape(1000, 1000);
@@ -170,6 +208,9 @@ void init()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glColor3d(0, 0, 0.9);
+    calculateCollision(arrayOfPoints, 10000);
+    globalTime = heap->heap.a[0].collisionTime;
+    prevGlobalTime = heap->heap.a[0].collisionTime;
 }
 
 /* Program entry point */
@@ -186,7 +227,7 @@ int main(int argc, char *argv[])
     glutDisplayFunc(display);
     glutIdleFunc(display);
     glClearColor(0, 0, 0, 1);
-    arrayOfPoints = generatePoints(500);
+    arrayOfPoints = generatePoints(10000);
     init();
     glutMainLoop();
 

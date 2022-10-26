@@ -1,19 +1,20 @@
 #include "DS.h"
 
-static void swim(Heap *p, int);
-static void sink(Heap *p, int);
-
 /*
   Хоёр зурвасын чухлыг харьцуулах функц.
   b нь илүү чухал бол 1, бусад үед 0-ыг буцаах функц.
   Өөрөөр хэлбэл a < b үйлдэл юм.
 */
-int less(const Msg *a, const Msg *b)
+int less(Msg *a, Msg *b)
 {
         // Энд жиших үйлдийг хийнэ
         if (b->collisionTime > a->collisionTime)
         {
                 return 1;
+        }
+        else if (b->collisionTime == a->collisionTime)
+        {
+                b->collisionTime += 0.1;
         }
         else
         {
@@ -53,7 +54,7 @@ void replace(Msg *a, Msg *b)
   Heap бүтцийн swim үйлдэл.
   k нь swim үйлдлийг p-ын зааж буй heap дээр эхлүүлэх индекс.
  */
-static void swim(Heap *p, int k)
+void swim(Heap *p, int k)
 {
         // Энд swim үйлдлийг хийнэ
         int i = k;
@@ -69,7 +70,7 @@ static void swim(Heap *p, int k)
   Heap бүтцийн sink үйлдэл.
   k нь sink үйлдлийг p-ын зааж буй heap дээр эхлүүлэх индекс.
  */
-static void sink(Heap *p, int k)
+void sink(Heap *p, int k)
 {
         // Энд sink үйлдлийг хийнэ
         int i = k;
