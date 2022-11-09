@@ -34,51 +34,46 @@ struct face f[100001];
 struct point p[50001];
 
 void points() {
-  FILE *fp;
-  int read, i = 1;
-  GLfloat x, y, z;
-  char ch;
-  fp = fopen("/Users/baljinnyamdayan/Downloads/dragon.obj", "r");
-  if (!fp) {
-    printf("file-g neej chasangui \n");
-    exit(1);
-  }
-  {
-    while (!(feof(fp))) {
-      read = fscanf(fp, "%c %f %f %f", &ch, &x, &y, &z);
-      if (ch == 'v') {
-        p[i].x = x;
-        p[i].y = y;
-        p[i].z = z;
-        i++;
-      }
+  // read file line by line, if first character is v save it to points array if
+  // f save it to faces array
+  FILE *file = fopen("/home/eggs/Downloads/dragon.obj", "r");
+  char line[128];
+  int i = 0;
+  int j = 0;
+  while (fgets(line, sizeof(line), file)) {
+    if (line[0] == 'v') {
+      sscanf(line, "v %f %f %f", &p[i].x, &p[i].y, &p[i].z);
+      i++;
+    } else if (line[0] == 'f') {
+      sscanf(line, "f %d %d %d", &f[j].a, &f[j].b, &f[j].c);
+      j++;
     }
   }
-  glEndList();
+  fclose(file);
 }
 
-void face() {
-  FILE *fp;
-  int read, i = 1, a, b, c;
-  char ch;
-  fp = fopen("/Users/baljinnyamdayan/Downloads/dragon.obj", "r");
-  if (!fp) {
-    printf("file alga bna\n");
-    exit(1);
-  }
-  {
-    while (!(feof(fp))) {
-      read = fscanf(fp, "%s %d %d %d", &ch, &a, &b, &c);
-      if (ch == 'f') {
-        f[i].a = a;
-        f[i].b = b;
-        f[i].c = c;
-        i++;
-      }
-    }
-  }
-  glEndList();
-}
+// void face() {
+//   FILE *fp;
+//   int read, i = 1, a, b, c;
+//   char ch;
+//   fp = fopen("/home/eggs/Downloads/dragon.obj", "r");
+//   if (!fp) {
+//     printf("file alga bna\n");
+//     exit(1);
+//   }
+//   {
+//     while (!(feof(fp))) {
+//       read = fscanf(fp, "%s %d %d %d", &ch, &a, &b, &c);
+//       if (ch == 'f') {
+//         f[i].a = a;
+//         f[i].b = b;
+//         f[i].c = c;
+//         i++;
+//       }
+//     }
+//   }
+//   glEndList();
+// }
 
 // zurah uildel hiigdene
 void display(void) {
@@ -92,14 +87,14 @@ void display(void) {
   glRotatef(xRot, 1.0f, 0.0f, 0.0f);
   glRotatef(yRot, 0.0f, 0.0f, 1.0f);
 
-  glBegin(GL_TRIANGLE_FAN);
-  for (int i = 1; i < 100001; i++) {
+  for (int i = 1; i < 2; i++) {
+    glBegin(GL_LINE_LOOP);
     glNormal3f(0.0f, -1.0f, 0.0f);
     glVertex3f(p[f[i].a].x, p[f[i].a].y, p[f[i].a].z);
     glVertex3f(p[f[i].b].x, p[f[i].b].y, p[f[i].b].z);
     glVertex3f(p[f[i].c].x, p[f[i].c].y, p[f[i].c].z);
+    glEnd();
   }
-  glEnd();
   glPopMatrix();
   glutSwapBuffers();
 }
@@ -157,7 +152,7 @@ int main(int argc, char **argv) {
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
   glutCreateWindow("never let you gonna down");
   points();
-  face();
+  // face();
   glutDisplayFunc(display);
   // Init();
   glutMouseFunc(mouse);
