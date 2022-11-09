@@ -17,13 +17,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 float globalTime = 0.0;
-float prevGlobalTime = 0.0;
-
+int fpsNum = 52;
 point *arrayOfPoints;
 Heap *heap;
-
+int particleNum = 20;
 point *generatePoints(int n) {
-  printf("fucker2\n");
   point *points = (point *)malloc(n * sizeof(point));
   for (int i = 0; i < n; i++) {
     // random floating points between -90 to +90
@@ -45,8 +43,36 @@ point *generatePoints(int n) {
   return points;
 }
 
+void predict(point *a) {
+  if (a == NULL)
+    return;
+  for (int i = 0; i < particleNum; i++) {
+    if (a == &arrayOfPoints[i])
+      continue;
+    float time = timeToHit(a, &arrayOfPoints[i]);
+    if (time > 0) {
+      Event event;
+      event.collisionTime = time;
+      event.a = a;
+      event.b = &arrayOfPoints[i];
+      printf("time to hit: %f %f %f\n", time, a->x, arrayOfPoints[i].x);
+      insert(heap, event);
+    }
+  }
+}
+
 void redraw(point *points, int numPoints) {
+
+  Event event;
+  if (heap->heap.len > 0) {
+    event = delMin(heap);
+  }
+  globalTime = event.collisionTime;
+  // TODO 1: bumbug oihgui bol zursaar baina
+  // TODO 2: bumbug orood irvel oilgo
+  // TODO 3: bumbug oihgui bol zursnii daraa daraagin zuraltiig heap ruu hii
   for (int i = 0; i < numPoints; i++) {
+    // collid with wall
     if (points[i].x + points[i].radius / 2 > 100) {
       points[i].speedX = -points[i].speedX;
     }
@@ -81,7 +107,7 @@ void reshape(int w, int h) {
 
 static void display(void) {
   glClear(GL_COLOR_BUFFER_BIT);
-  drawCollision(arrayOfPoints, 10000);
+  drawCollision(arrayOfPoints, particleNum);
   glutSwapBuffers();
 }
 
@@ -94,12 +120,19 @@ void init() {
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glColor3d(0, 0, 0.9);
+  for (int i = 0; i < particleNum; i++) {
+    predict(&arrayOfPoints[i]);
+  }
+  Event event;
+  event.collisionTime = 0;
+  event.a = NULL;
+  event.b = NULL;
+  insert(heap, event);
 }
 
 void timer(int value) {
   glutPostRedisplay();
-  printf("fucker1\n");
-  glutTimerFunc(1000 / 20, timer, 0);
+  glutTimerFunc(1000 / fpsNum, timer, 0);
 }
 
 int main(int argc, char *argv[]) {
@@ -112,7 +145,7 @@ int main(int argc, char *argv[]) {
   glutDisplayFunc(display);
   glutTimerFunc(0, timer, 0);
   glClearColor(0, 0, 0, 1);
-  arrayOfPoints = generatePoints(10000);
+  arrayOfPoints = generatePoints(particleNum);
   init();
   glutMainLoop();
   return EXIT_SUCCESS;

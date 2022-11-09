@@ -4,24 +4,22 @@
 #include <string.h>
 
 typedef struct {
-  float x;
-  float y;
-  float radius;
-  float speedX;
-  float speedY;
+  float x, y;
+  float speedX, speedY;
   int count;
+  float radius;
 } point;
 
-struct Msg {
+struct Event {
   point *a;
+  point *b;
   float collisionTime;
   // x for 0, y for 1;
-  int whichWall;
 };
-typedef struct Msg Msg;
+typedef struct Event Event;
 
 struct Array {
-  Msg a[10000];
+  Event a[10000];
   int len;
 };
 
@@ -33,10 +31,11 @@ typedef struct Heap Heap;
 #define h_arr heap.a
 #define h_len heap.len
 
-int less(Msg *, Msg *);
-void insert(Heap *, const Msg);
-Msg delMin(Heap *);
+int less(Event *, Event *);
+void insert(Heap *, const Event);
+Event delMin(Heap *);
 void swim(Heap *p, int);
 void sink(Heap *p, int);
+float timeToHit(point *a, point *b);
 
 #endif
