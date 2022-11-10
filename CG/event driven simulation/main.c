@@ -2,7 +2,6 @@
  * GLUT Shapes Demo Updated
  */
 
-#include <GL/freeglut_std.h>
 #ifdef __APPLE__
 #include <GLUT/glut.h>
 // #include <window.h>
@@ -16,11 +15,14 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
 float globalTime = 0.0;
-int fpsNum = 52;
+int fpsNum = 30;
 point *arrayOfPoints;
 Heap *heap;
-int particleNum = 20;
+int particleNum = 30;
 point *generatePoints(int n) {
   point *points = (point *)malloc(n * sizeof(point));
   for (int i = 0; i < n; i++) {
@@ -55,18 +57,57 @@ void predict(point *a) {
       event.collisionTime = time;
       event.a = a;
       event.b = &arrayOfPoints[i];
-      printf("time to hit: %f %f %f\n", time, a->x, arrayOfPoints[i].x);
+      event.countA = a->count;
+      event.countB = arrayOfPoints[i].count;
+      // printf("time to hit: %f %f %f\n", time, a->x, arrayOfPoints[i].x);
       insert(heap, event);
     }
   }
 }
 
-void redraw(point *points, int numPoints) {
+int isValid(Event event) {
+  if (event.a->count != event.countA)
+    return 0;
+  if (event.b->count != event.countB)
+    return 0;
+  return 1;
+}
 
+// bounce off
+void bounceOff(point *a, point *b) {
+  a->speedX = -a->speedX;
+  a->speedY = -a->speedY;
+  b->speedX = -b->speedX;
+  b->speedY = -b->speedY;
+
+  a->count++;
+  b->count++;
+}
+
+void update(point *a, float dt) {
+  a->x += a->speedX * dt;
+  a->y += a->speedY * dt;
+}
+// ! USE PREVIOUS GLOBAL TIME PLEASE !!!
+void redraw(point *points, int numPoints) {
   Event event;
   if (heap->heap.len > 0) {
     event = delMin(heap);
+    printf("time to hit: %f %f %f \n", event.collisionTime, event.a->x,
+           event.b->x);
+    for (int i = 0; i < heap->heap.len; i++) {
+      heap->heap.a[i].collisionTime -= event.collisionTime;
+    }
+    if (event.collisionTime < 0.5) {
+      if (isValid(event)) {
+        // bounce off
+        bounceOff(event.a, event.b);
+      }
+    }
+    predict(event.a);
+    predict(event.b);
   }
+  printf("%d", heap->heap.len);
   globalTime = event.collisionTime;
   // TODO 1: bumbug oihgui bol zursaar baina
   // TODO 2: bumbug orood irvel oilgo
@@ -75,15 +116,19 @@ void redraw(point *points, int numPoints) {
     // collid with wall
     if (points[i].x + points[i].radius / 2 > 100) {
       points[i].speedX = -points[i].speedX;
+      predict(&points[i]);
     }
     if (points[i].x - points[i].radius / 2 < -100) {
       points[i].speedX = -points[i].speedX;
+      predict(&points[i]);
     }
     if (points[i].y + points[i].radius / 2 > 100) {
       points[i].speedY = -points[i].speedY;
+      predict(&points[i]);
     }
     if (points[i].y - points[i].radius / 2 < -100) {
       points[i].speedY = -points[i].speedY;
+      predict(&points[i]);
     }
     glPointSize(points[i].radius);
     glBegin(GL_POINTS);
@@ -123,11 +168,6 @@ void init() {
   for (int i = 0; i < particleNum; i++) {
     predict(&arrayOfPoints[i]);
   }
-  Event event;
-  event.collisionTime = 0;
-  event.a = NULL;
-  event.b = NULL;
-  insert(heap, event);
 }
 
 void timer(int value) {

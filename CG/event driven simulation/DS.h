@@ -14,12 +14,14 @@ struct Event {
   point *a;
   point *b;
   float collisionTime;
+  int countA;
+  int countB;
   // x for 0, y for 1;
 };
 typedef struct Event Event;
 
 struct Array {
-  Event a[10000];
+  Event a[100000];
   int len;
 };
 

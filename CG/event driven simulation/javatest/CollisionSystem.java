@@ -48,7 +48,7 @@ public class CollisionSystem {
      */
     public CollisionSystem(Particle[] particles) {
         this.particles = particles.clone();   // defensive copy
-    }
+    } 
 
     // updates priority queue with all new events for particle a
     private void predict(Particle a, double limit) {

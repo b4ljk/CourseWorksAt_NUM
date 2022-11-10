@@ -8,10 +8,11 @@
 */
 int less(Event *a, Event *b) {
   // Энд жиших үйлдийг хийнэ
+  if (!a || !b)
+    return 0;
   if (b->collisionTime > a->collisionTime) {
     return 1;
   } else if (b->collisionTime == a->collisionTime) {
-    b->collisionTime += 0.1;
     return 1;
   } else {
     return 0;
