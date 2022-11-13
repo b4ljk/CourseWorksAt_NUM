@@ -19,10 +19,11 @@
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 
 float globalTime = 0.0;
+float prevTime = 0.0;
 int fpsNum = 30;
 point *arrayOfPoints;
 Heap *heap;
-int particleNum = 30;
+int particleNum = 4;
 point *generatePoints(int n) {
   point *points = (point *)malloc(n * sizeof(point));
   for (int i = 0; i < n; i++) {
@@ -96,7 +97,7 @@ void redraw(point *points, int numPoints) {
     printf("time to hit: %f %f %f \n", event.collisionTime, event.a->x,
            event.b->x);
     for (int i = 0; i < heap->heap.len; i++) {
-      heap->heap.a[i].collisionTime -= event.collisionTime;
+      heap->heap.a[i].collisionTime -= prevTime;
     }
     if (event.collisionTime < 0.5) {
       if (isValid(event)) {
@@ -108,6 +109,7 @@ void redraw(point *points, int numPoints) {
     predict(event.b);
   }
   printf("%d", heap->heap.len);
+  prevTime = globalTime;
   globalTime = event.collisionTime;
   // TODO 1: bumbug oihgui bol zursaar baina
   // TODO 2: bumbug orood irvel oilgo
@@ -117,18 +119,22 @@ void redraw(point *points, int numPoints) {
     if (points[i].x + points[i].radius / 2 > 100) {
       points[i].speedX = -points[i].speedX;
       predict(&points[i]);
+      points[i].count++;
     }
     if (points[i].x - points[i].radius / 2 < -100) {
       points[i].speedX = -points[i].speedX;
       predict(&points[i]);
+      points[i].count++;
     }
     if (points[i].y + points[i].radius / 2 > 100) {
       points[i].speedY = -points[i].speedY;
       predict(&points[i]);
+      points[i].count++;
     }
     if (points[i].y - points[i].radius / 2 < -100) {
       points[i].speedY = -points[i].speedY;
       predict(&points[i]);
+      points[i].count++;
     }
     glPointSize(points[i].radius);
     glBegin(GL_POINTS);
