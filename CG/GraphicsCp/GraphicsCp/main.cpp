@@ -1,3 +1,4 @@
+#include <cstdio>
 #ifdef __APPLE__
 #define GL_SILENCE_DEPRECATION
 #include <GLUT/glut.h>
@@ -52,29 +53,6 @@ void points() {
   fclose(file);
 }
 
-// void face() {
-//   FILE *fp;
-//   int read, i = 1, a, b, c;
-//   char ch;
-//   fp = fopen("/home/eggs/Downloads/dragon.obj", "r");
-//   if (!fp) {
-//     printf("file alga bna\n");
-//     exit(1);
-//   }
-//   {
-//     while (!(feof(fp))) {
-//       read = fscanf(fp, "%s %d %d %d", &ch, &a, &b, &c);
-//       if (ch == 'f') {
-//         f[i].a = a;
-//         f[i].b = b;
-//         f[i].c = c;
-//         i++;
-//       }
-//     }
-//   }
-//   glEndList();
-// }
-
 // zurah uildel hiigdene
 void display(void) {
   glClearColor(0.0, 0.0, 0.0, 2);
@@ -87,12 +65,13 @@ void display(void) {
   glRotatef(xRot, 1.0f, 0.0f, 0.0f);
   glRotatef(yRot, 0.0f, 0.0f, 1.0f);
 
-  for (int i = 1; i < 2; i++) {
-    glBegin(GL_LINE_LOOP);
+  for (int i = 0; i < 100001; i++) {
+    glBegin(GL_TRIANGLE_STRIP);
     glNormal3f(0.0f, -1.0f, 0.0f);
-    glVertex3f(p[f[i].a].x, p[f[i].a].y, p[f[i].a].z);
-    glVertex3f(p[f[i].b].x, p[f[i].b].y, p[f[i].b].z);
-    glVertex3f(p[f[i].c].x, p[f[i].c].y, p[f[i].c].z);
+    glVertex3f(p[f[i].a - 1].x, p[f[i].a - 1].y, p[f[i].a - 1].z);
+    glVertex3f(p[f[i].b - 1].x, p[f[i].b - 1].y, p[f[i].b - 1].z);
+    glVertex3f(p[f[i].c - 1].x, p[f[i].c - 1].y, p[f[i].c - 1].z);
+
     glEnd();
   }
   glPopMatrix();
