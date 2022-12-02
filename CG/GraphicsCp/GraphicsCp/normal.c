@@ -128,7 +128,9 @@ void display()
 
   FILE *fin;
 
-  fin = fopen("/Users/baljinnyamdayan/Downloads/dragon.obj", "r");
+  fin = fopen("/Users/tsenguunotgonbaatar/Documents/computer_graphics/cg_lab9/"
+              "dragon.obj",
+              "r");
 
   if (fin == NULL)
 

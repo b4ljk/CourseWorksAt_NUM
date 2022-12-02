@@ -31,8 +31,8 @@ point *generatePoints(int n) {
     points[i].x = (float)(rand() % 180) - 90;
     points[i].y = (float)(rand() % 180) - 90;
 
-    // random radius between 1-10
-    points[i].radius = (float)(rand() % 10) + 1;
+    // random radius between 7-12
+    points[i].radius = (float)(rand() % 6) + 7;
     // random speed via x,y between -0.5 to +0.5 not including 0
     points[i].speedX = (float)(rand() % 10) / 10 - 0.5;
     points[i].speedY = (float)(rand() % 10) / 10 - 0.5;
@@ -45,7 +45,19 @@ point *generatePoints(int n) {
   }
   return points;
 }
+void DrawCircle(float cx, float cy, float r, int num_segments) {
+  glBegin(GL_LINE_LOOP);
+  for (float ii = 0; ii < num_segments; ii += 1) {
+    float theta =
+        2.0f * 3.1415926f * (ii) / (num_segments); // get the current angle
 
+    float x = r * cosf(theta); // calculate the x component
+    float y = r * sinf(theta); // calculate the y component
+
+    glVertex2f(x + cx, y + cy); // output vertex
+  }
+  glEnd();
+}
 void predict(point *a) {
   if (a == NULL)
     return;
@@ -136,12 +148,7 @@ void redraw(point *points, int numPoints) {
       predict(&points[i]);
       points[i].count++;
     }
-    glPointSize(points[i].radius);
-    glBegin(GL_POINTS);
-    glVertex2f(points[i].x, points[i].y);
-    points[i].x += points[i].speedX;
-    points[i].y += points[i].speedY;
-    glEnd();
+    DrawCircle(points->x, points->y, points->radius, 365);
   }
 }
 
@@ -152,7 +159,7 @@ void reshape(int w, int h) {
   glViewport(0, 0, (GLsizei)w, (GLsizei)h);
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  glOrtho(-100, 100, -100, 100, -1.0, 1.0);
+  glOrtho(-1000, 1000, -1000, 1000, -1.0, 1.0);
   glMatrixMode(GL_MODELVIEW);
 }
 
