@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FF83AFC92919129B00D5FE05 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF83AFC82919129B00D5FE05 /* GLUT.framework */; };
-		FF83AFCB291912A000D5FE05 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF83AFCA291912A000D5FE05 /* OpenGL.framework */; };
-		FFA6920229409A0C0065C1A2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF83AFC0291911AB00D5FE05 /* main.cpp */; };
+		FFA6921029409A630065C1A2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFA6920F29409A630065C1A2 /* main.cpp */; };
+		FFA6921829409A6A0065C1A2 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFA6921729409A6A0065C1A2 /* OpenGL.framework */; };
+		FFA6921A29409A6D0065C1A2 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFA6921929409A6D0065C1A2 /* GLUT.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		FF83AFBB291911AB00D5FE05 /* CopyFiles */ = {
+		FFA6920A29409A630065C1A2 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -25,55 +25,55 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		FF83AFBD291911AB00D5FE05 /* GraphicsCp */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GraphicsCp; sourceTree = BUILT_PRODUCTS_DIR; };
-		FF83AFC0291911AB00D5FE05 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		FF83AFC82919129B00D5FE05 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
-		FF83AFCA291912A000D5FE05 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		FFA6920C29409A630065C1A2 /* lastlab */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = lastlab; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFA6920F29409A630065C1A2 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		FFA6921729409A6A0065C1A2 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		FFA6921929409A6D0065C1A2 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		FF83AFBA291911AB00D5FE05 /* Frameworks */ = {
+		FFA6920929409A630065C1A2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF83AFC92919129B00D5FE05 /* GLUT.framework in Frameworks */,
-				FF83AFCB291912A000D5FE05 /* OpenGL.framework in Frameworks */,
+				FFA6921A29409A6D0065C1A2 /* GLUT.framework in Frameworks */,
+				FFA6921829409A6A0065C1A2 /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		FF83AFB4291911AB00D5FE05 = {
+		FFA6920329409A630065C1A2 = {
 			isa = PBXGroup;
 			children = (
-				FF83AFBF291911AB00D5FE05 /* GraphicsCp */,
-				FF83AFBE291911AB00D5FE05 /* Products */,
-				FF83AFC72919129B00D5FE05 /* Frameworks */,
+				FFA6920E29409A630065C1A2 /* lastlab */,
+				FFA6920D29409A630065C1A2 /* Products */,
+				FFA6921629409A6A0065C1A2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
-		FF83AFBE291911AB00D5FE05 /* Products */ = {
+		FFA6920D29409A630065C1A2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FF83AFBD291911AB00D5FE05 /* GraphicsCp */,
+				FFA6920C29409A630065C1A2 /* lastlab */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		FF83AFBF291911AB00D5FE05 /* GraphicsCp */ = {
+		FFA6920E29409A630065C1A2 /* lastlab */ = {
 			isa = PBXGroup;
 			children = (
-				FF83AFC0291911AB00D5FE05 /* main.cpp */,
+				FFA6920F29409A630065C1A2 /* main.cpp */,
 			);
-			path = GraphicsCp;
+			path = lastlab;
 			sourceTree = "<group>";
 		};
-		FF83AFC72919129B00D5FE05 /* Frameworks */ = {
+		FFA6921629409A6A0065C1A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				FF83AFCA291912A000D5FE05 /* OpenGL.framework */,
-				FF83AFC82919129B00D5FE05 /* GLUT.framework */,
+				FFA6921929409A6D0065C1A2 /* GLUT.framework */,
+				FFA6921729409A6A0065C1A2 /* OpenGL.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -81,38 +81,38 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		FF83AFBC291911AB00D5FE05 /* GraphicsCp */ = {
+		FFA6920B29409A630065C1A2 /* lastlab */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FF83AFC4291911AB00D5FE05 /* Build configuration list for PBXNativeTarget "GraphicsCp" */;
+			buildConfigurationList = FFA6921329409A630065C1A2 /* Build configuration list for PBXNativeTarget "lastlab" */;
 			buildPhases = (
-				FF83AFB9291911AB00D5FE05 /* Sources */,
-				FF83AFBA291911AB00D5FE05 /* Frameworks */,
-				FF83AFBB291911AB00D5FE05 /* CopyFiles */,
+				FFA6920829409A630065C1A2 /* Sources */,
+				FFA6920929409A630065C1A2 /* Frameworks */,
+				FFA6920A29409A630065C1A2 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = GraphicsCp;
-			productName = GraphicsCp;
-			productReference = FF83AFBD291911AB00D5FE05 /* GraphicsCp */;
+			name = lastlab;
+			productName = lastlab;
+			productReference = FFA6920C29409A630065C1A2 /* lastlab */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		FF83AFB5291911AB00D5FE05 /* Project object */ = {
+		FFA6920429409A630065C1A2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastUpgradeCheck = 1400;
 				TargetAttributes = {
-					FF83AFBC291911AB00D5FE05 = {
+					FFA6920B29409A630065C1A2 = {
 						CreatedOnToolsVersion = 14.0.1;
 					};
 				};
 			};
-			buildConfigurationList = FF83AFB8291911AB00D5FE05 /* Build configuration list for PBXProject "GraphicsCp" */;
+			buildConfigurationList = FFA6920729409A630065C1A2 /* Build configuration list for PBXProject "lastlab" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -120,29 +120,29 @@
 				en,
 				Base,
 			);
-			mainGroup = FF83AFB4291911AB00D5FE05;
-			productRefGroup = FF83AFBE291911AB00D5FE05 /* Products */;
+			mainGroup = FFA6920329409A630065C1A2;
+			productRefGroup = FFA6920D29409A630065C1A2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				FF83AFBC291911AB00D5FE05 /* GraphicsCp */,
+				FFA6920B29409A630065C1A2 /* lastlab */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		FF83AFB9291911AB00D5FE05 /* Sources */ = {
+		FFA6920829409A630065C1A2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFA6920229409A0C0065C1A2 /* main.cpp in Sources */,
+				FFA6921029409A630065C1A2 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		FF83AFC2291911AB00D5FE05 /* Debug */ = {
+		FFA6921129409A630065C1A2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -200,7 +200,7 @@
 			};
 			name = Debug;
 		};
-		FF83AFC3291911AB00D5FE05 /* Release */ = {
+		FFA6921229409A630065C1A2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -251,20 +251,18 @@
 			};
 			name = Release;
 		};
-		FF83AFC5291911AB00D5FE05 /* Debug */ = {
+		FFA6921429409A630065C1A2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				"HEADER_SEARCH_PATHS[arch=*]" = /Users/baljinnyamdayan/Documents/stb;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
-		FF83AFC6291911AB00D5FE05 /* Release */ = {
+		FFA6921529409A630065C1A2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				"HEADER_SEARCH_PATHS[arch=*]" = /Users/baljinnyamdayan/Documents/stb;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -272,25 +270,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		FF83AFB8291911AB00D5FE05 /* Build configuration list for PBXProject "GraphicsCp" */ = {
+		FFA6920729409A630065C1A2 /* Build configuration list for PBXProject "lastlab" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				FF83AFC2291911AB00D5FE05 /* Debug */,
-				FF83AFC3291911AB00D5FE05 /* Release */,
+				FFA6921129409A630065C1A2 /* Debug */,
+				FFA6921229409A630065C1A2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FF83AFC4291911AB00D5FE05 /* Build configuration list for PBXNativeTarget "GraphicsCp" */ = {
+		FFA6921329409A630065C1A2 /* Build configuration list for PBXNativeTarget "lastlab" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				FF83AFC5291911AB00D5FE05 /* Debug */,
-				FF83AFC6291911AB00D5FE05 /* Release */,
+				FFA6921429409A630065C1A2 /* Debug */,
+				FFA6921529409A630065C1A2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = FF83AFB5291911AB00D5FE05 /* Project object */;
+	rootObject = FFA6920429409A630065C1A2 /* Project object */;
 }

@@ -1,5 +1,4 @@
 
-
 #include <GLUT/glut.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -77,11 +76,17 @@ GLuint loadBMP_custom(const char *imagepath) {
   }
   RGBTRIPLE rgb;
   int j = 0;
+    dataPos = *(int *)&(header[0x0A]);
+    imageSize = *(int *)&(header[0x22]);
+    width = *(int *)&(header[0x12]);
+    height = *(int *)&(header[0x16]);
+
   l_texture = (byte *)malloc(width * height * 4);
 
   // And fill it with zeros
   memset(l_texture, 0, width * height * 4);
   // At this point we can read every pixel of the image
+    j=0;
   for (int i = 0; i < width * height; i++) {
     // We load an RGB value from the file
     fread(&rgb, sizeof(rgb), 1, file);
@@ -94,11 +99,7 @@ GLuint loadBMP_custom(const char *imagepath) {
     j += 4;                           // Go to the next position
   }
 
-  dataPos = *(int *)&(header[0x0A]);
-  imageSize = *(int *)&(header[0x22]);
-  width = *(int *)&(header[0x12]);
-  height = *(int *)&(header[0x16]);
-
+ 
   data = new unsigned char[imageSize];
 
   fread(data, 1, imageSize, file);
@@ -296,11 +297,10 @@ void Keyboard(unsigned char key, int x, int y) {
 }
 
 void mouse(int button, int state, int x, int y) {
-  if (state == 1)
-    return;
+ 
   if (button == 3)
     glScalef(1.1, 1.1, 1.1);
-  else if (button == 4)
+  else if (button == 2)
     glScalef(0.9, 0.9, 0.9);
   glutPostRedisplay();
 }
@@ -324,7 +324,7 @@ void init() {
   // Enable lighting
   glEnable(GL_LIGHTING);
 
-  image = loadBMP_custom("/Users/baljinnyamdayan/Downloads/Texture.bmp");
+//  image = loadBMP_custom("/Users/baljinnyamdayan/Downloads/Texture.bmp");
 
   // Setup and enable light 0
   glLightModelfv(GL_LIGHT_MODEL_AMBIENT, whiteLight);
