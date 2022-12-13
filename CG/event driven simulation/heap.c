@@ -102,7 +102,8 @@ float timeToHit(point *a, point *b) {
   if (dvdv == 0)
     return -1;
   float drdr = dx * dx + dy * dy;
-  float sigma = a->radius / 10 + b->radius / 10;
+  // sigma
+  float sigma = a->radius / 2 + b->radius / 2;
   float d = (dvdr * dvdr) - dvdv * (drdr - sigma * sigma);
   if (d < 0)
     return -1;

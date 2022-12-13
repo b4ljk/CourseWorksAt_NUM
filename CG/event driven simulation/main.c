@@ -2,6 +2,7 @@
  * GLUT Shapes Demo Updated
  */
 
+#include <GL/gl.h>
 #ifdef __APPLE__
 #include <GLUT/glut.h>
 // #include <window.h>
@@ -19,11 +20,11 @@
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 
 float globalTime = 0.0;
-float prevTime = 0.0;
+
 int fpsNum = 30;
 point *arrayOfPoints;
 Heap *heap;
-int particleNum = 4;
+int particleNum = 2000;
 point *generatePoints(int n) {
   point *points = (point *)malloc(n * sizeof(point));
   for (int i = 0; i < n; i++) {
@@ -67,7 +68,7 @@ void predict(point *a) {
     float time = timeToHit(a, &arrayOfPoints[i]);
     if (time > 0) {
       Event event;
-      event.collisionTime = time;
+      event.collisionTime = globalTime + time;
       event.a = a;
       event.b = &arrayOfPoints[i];
       event.countA = a->count;
@@ -88,12 +89,33 @@ int isValid(Event event) {
 
 // bounce off
 void bounceOff(point *a, point *b) {
-  a->speedX = -a->speedX;
-  a->speedY = -a->speedY;
-  b->speedX = -b->speedX;
-  b->speedY = -b->speedY;
+  // use speedx speedy to calculate angle and bounce off the balls
+  float dx = b->x - a->x;
+  float dy = b->y - a->y;
+  float distance = sqrt(dx * dx + dy * dy);
+  float cos = dx / distance;
+  float sin = dy / distance;
 
-  a->count++;
+  float vx1 = a->speedX;
+  float vy1 = a->speedY;
+  float vx2 = b->speedX;
+  float vy2 = b->speedY;
+
+  float vx1f = (vx1 * (a->radius - b->radius) + 2 * b->radius * vx2) /
+               (a->radius + b->radius);
+  float vy1f = (vy1 * (a->radius - b->radius) + 2 * b->radius * vy2) /
+               (a->radius + b->radius);
+  float vx2f = (vx2 * (b->radius - a->radius) + 2 * a->radius * vx1) /
+               (a->radius + b->radius);
+  float vy2f = (vy2 * (b->radius - a->radius) + 2 * a->radius * vy1) /
+               (a->radius + b->radius);
+
+  a->speedX = vx1f * cos - vy1f * sin;
+  a->speedY = vx1f * sin + vy1f * cos;
+  b->speedX = vx2f * cos - vy2f * sin;
+  b->speedY = vx2f * sin + vy2f * cos;
+
+  // printf("bounce off %f %f %f %f
   b->count++;
 }
 
@@ -101,55 +123,51 @@ void update(point *a, float dt) {
   a->x += a->speedX * dt;
   a->y += a->speedY * dt;
 }
-// ! USE PREVIOUS GLOBAL TIME PLEASE !!!
+
 void redraw(point *points, int numPoints) {
   Event event;
-  if (heap->heap.len > 0) {
+  printf("global time: %f \t %f\n", globalTime, heap->heap.a[0].collisionTime);
+  if (heap->heap.len > 0 && heap->heap.a[0].collisionTime <= globalTime) {
     event = delMin(heap);
-    printf("time to hit: %f %f %f \n", event.collisionTime, event.a->x,
-           event.b->x);
-    for (int i = 0; i < heap->heap.len; i++) {
-      heap->heap.a[i].collisionTime -= prevTime;
+
+    if (isValid(event)) {
+      // bounce off
+      bounceOff(event.a, event.b);
     }
-    if (event.collisionTime < 0.5) {
-      if (isValid(event)) {
-        // bounce off
-        bounceOff(event.a, event.b);
-      }
-    }
+
     predict(event.a);
     predict(event.b);
   }
-  printf("%d", heap->heap.len);
-  prevTime = globalTime;
-  globalTime = event.collisionTime;
+
+  printf("%d\t", heap->heap.len);
   // TODO 1: bumbug oihgui bol zursaar baina
   // TODO 2: bumbug orood irvel oilgo
   // TODO 3: bumbug oihgui bol zursnii daraa daraagin zuraltiig heap ruu hii
   for (int i = 0; i < numPoints; i++) {
     // collid with wall
-    if (points[i].x + points[i].radius / 2 > 100) {
+    if (points[i].x + points[i].radius > 100) {
       points[i].speedX = -points[i].speedX;
       predict(&points[i]);
       points[i].count++;
     }
-    if (points[i].x - points[i].radius / 2 < -100) {
+    if (points[i].x - points[i].radius < -100) {
       points[i].speedX = -points[i].speedX;
       predict(&points[i]);
       points[i].count++;
     }
-    if (points[i].y + points[i].radius / 2 > 100) {
+    if (points[i].y + points[i].radius > 100) {
       points[i].speedY = -points[i].speedY;
       predict(&points[i]);
       points[i].count++;
     }
-    if (points[i].y - points[i].radius / 2 < -100) {
+    if (points[i].y - points[i].radius < -100) {
       points[i].speedY = -points[i].speedY;
       predict(&points[i]);
       points[i].count++;
     }
     DrawCircle(points->x, points->y, points->radius, 365);
   }
+  globalTime += 1.0;
 }
 
 void drawCollision(point *points, int numPoints) { redraw(points, numPoints); }

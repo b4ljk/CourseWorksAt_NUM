@@ -130,7 +130,6 @@ public class Particle {
         double drdr = dx*dx + dy*dy;
         double sigma = this.radius + that.radius;
         double d = (dvdr*dvdr) - dvdv * (drdr - sigma*sigma);
-        // if (drdr < sigma*sigma) StdOut.println("overlapping particles");
         if (d < 0) return INFINITY;
         return -(dvdr + Math.sqrt(d)) / dvdv;
     }
