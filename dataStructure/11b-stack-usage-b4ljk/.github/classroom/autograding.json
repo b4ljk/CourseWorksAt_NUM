@@ -1,0 +1,34 @@
+{
+  "tests": [
+    {
+      "name": "preorder",
+      "setup": "echo I2luY2x1ZGUgIkRTLmgiCmludCBtYWluKCkKewogICAgICAgIENCVHJlZSB0cjsKICAgICAgICB0ci5jYl9sZW4gPSAwOwogICAgICAgIAogICAgICAgIGludCBuLCB4LCBpOwogICAgICAgIHNjYW5mKCIlZCIsICZuKTsKICAgICAgICBmb3IgKGkgPSAwOyBpIDwgbjsgaSsrKSB7CiAgICAgICAgICAgICAgICBzY2FuZigiJWQiLCAmeCk7CiAgICAgICAgICAgICAgICBjYl9wdXNoKCZ0ciwgeCk7CiAgICAgICAgfQogICAgICAgIGNiX3ByZW9yZGVyKCZ0ciwgMCk7CiAgICAgICAgY2JfcHJlb3JkZXIoJnRyLCBuLzMpOwogICAgICAgIHJldHVybiAwOwp9Cg== | base64 -d > main.c && if cflow cbtree.c | grep -q recursive; then echo 'Recursion detected'; exit 1; fi && gcc *.c -o cbt -lm",
+      "run": "/usr/bin/timeout -k 1s -s 9 1s ./cbt",
+      "input": "99\r\n-19 -29 2 89 31 37 82 -71 99 -33 64 96 64 -3 -93 -94 33 71 -46 -72 -17 -39 24 80 -5 53 -56 -67 -59 -39 35 -11 84 81 -32 -88 -100 53 -78 -91 -50 -82 19 -73 -9 -47 -42 15 0 -29 -33 94 36 56 42 97 -54 -39 55 37 21 89 17 92 -82 91 75 93 10 -97 95 61 -36 -29 1 43 27 -39 -14 -80 -59 29 87 -14 -53 -97 84 77 53 91 -36 -32 15 6 25 17 -50 -29 -9 -48 ",
+      "output": "-19\r\n-29\r\n89\r\n-71\r\n-94\r\n-11\r\n92\r\n-82\r\n84\r\n91\r\n75\r\n33\r\n81\r\n93\r\n10\r\n-32\r\n-97\r\n95\r\n99\r\n71\r\n-88\r\n61\r\n-36\r\n-100\r\n-29\r\n1\r\n-46\r\n53\r\n43\r\n27\r\n-78\r\n-39\r\n-14\r\n31\r\n-33\r\n-72\r\n-91\r\n-80\r\n-59\r\n-50\r\n29\r\n87\r\n-17\r\n-82\r\n-14\r\n-53\r\n19\r\n-97\r\n84\r\n64\r\n-39\r\n-73\r\n77\r\n53\r\n-9\r\n91\r\n-36\r\n24\r\n-47\r\n-32\r\n15\r\n-42\r\n6\r\n25\r\n2\r\n37\r\n96\r\n80\r\n15\r\n17\r\n-50\r\n0\r\n-29\r\n-9\r\n-5\r\n-29\r\n-33\r\n64\r\n53\r\n94\r\n36\r\n-56\r\n56\r\n42\r\n82\r\n-3\r\n-67\r\n97\r\n-54\r\n-59\r\n-39\r\n55\r\n-93\r\n-39\r\n37\r\n21\r\n35\r\n89\r\n17\r\n81\r\n93\r\n10\r\n",
+      "comparison": "exact",
+      "timeout": 1,
+      "points": 4
+    },
+    {
+      "name": "inorder",
+      "setup": "echo I2luY2x1ZGUgIkRTLmgiCmludCBtYWluKCkKewogICAgICAgIENCVHJlZSB0cjsKICAgICAgICB0ci5jYl9sZW4gPSAwOwogICAgICAgIAogICAgICAgIGludCBuLCB4LCBpOwogICAgICAgIHNjYW5mKCIlZCIsICZuKTsKICAgICAgICBmb3IgKGkgPSAwOyBpIDwgbjsgaSsrKSB7CiAgICAgICAgICAgICAgICBzY2FuZigiJWQiLCAmeCk7CiAgICAgICAgICAgICAgICBjYl9wdXNoKCZ0ciwgeCk7CiAgICAgICAgfQogICAgICAgIGNiX2lub3JkZXIoJnRyLCAwKTsKICAgICAgICBjYl9pbm9yZGVyKCZ0ciwgbi8zKTsKICAgICAgICByZXR1cm4gMDsKfQo= | base64 -d > main.c && if cflow cbtree.c | grep -q recursive; then echo 'Recursion detected'; exit 1; fi && gcc *.c -o cbt -lm",
+      "run": "/usr/bin/timeout -k 1s -s 9 1s ./cbt",
+      "input": "99\r\n-19 -29 2 89 31 37 82 -71 99 -33 64 96 64 -3 -93 -94 33 71 -46 -72 -17 -39 24 80 -5 53 -56 -67 -59 -39 35 -11 84 81 -32 -88 -100 53 -78 -91 -50 -82 19 -73 -9 -47 -42 15 0 -29 -33 94 36 56 42 97 -54 -39 55 37 21 89 17 92 -82 91 75 93 10 -97 95 61 -36 -29 1 43 27 -39 -14 -80 -59 29 87 -14 -53 -97 84 77 53 91 -36 -32 15 6 25 17 -50 -29 -9 -48 ",
+      "output": "92\r\n-11\r\n-82\r\n-94\r\n91\r\n84\r\n75\r\n-71\r\n93\r\n81\r\n10\r\n33\r\n-97\r\n-32\r\n95\r\n89\r\n61\r\n-88\r\n-36\r\n71\r\n-29\r\n-100\r\n1\r\n99\r\n43\r\n53\r\n27\r\n-46\r\n-39\r\n-78\r\n-14\r\n-29\r\n-80\r\n-91\r\n-59\r\n-72\r\n29\r\n-50\r\n87\r\n-33\r\n-14\r\n-82\r\n-53\r\n-17\r\n-97\r\n19\r\n84\r\n31\r\n77\r\n-73\r\n53\r\n-39\r\n91\r\n-9\r\n-36\r\n64\r\n-32\r\n-47\r\n15\r\n24\r\n6\r\n-42\r\n25\r\n-19\r\n17\r\n15\r\n-50\r\n80\r\n-29\r\n0\r\n-9\r\n96\r\n-29\r\n-5\r\n-33\r\n37\r\n94\r\n53\r\n36\r\n64\r\n56\r\n-56\r\n42\r\n2\r\n97\r\n-67\r\n-54\r\n-3\r\n-39\r\n-59\r\n55\r\n82\r\n37\r\n-39\r\n21\r\n-93\r\n89\r\n35\r\n17\r\n93\r\n81\r\n10\r\n",
+      "comparison": "exact",
+      "timeout": 1,
+      "points": 3
+    },
+    {
+      "name": "postorder",
+      "setup": "echo I2luY2x1ZGUgIkRTLmgiCmludCBtYWluKCkKewogICAgICAgIENCVHJlZSB0cjsKICAgICAgICB0ci5jYl9sZW4gPSAwOwogICAgICAgIAogICAgICAgIGludCBuLCB4LCBpOwogICAgICAgIHNjYW5mKCIlZCIsICZuKTsKICAgICAgICBmb3IgKGkgPSAwOyBpIDwgbjsgaSsrKSB7CiAgICAgICAgICAgICAgICBzY2FuZigiJWQiLCAmeCk7CiAgICAgICAgICAgICAgICBjYl9wdXNoKCZ0ciwgeCk7CiAgICAgICAgfQogICAgICAgIGNiX3Bvc3RvcmRlcigmdHIsIDApOwogICAgICAgIGNiX3Bvc3RvcmRlcigmdHIsIG4vMyk7CiAgICAgICAgcmV0dXJuIDA7Cn0K | base64 -d > main.c && if cflow cbtree.c | grep -q recursive; then echo 'Recursion detected'; exit 1; fi && gcc *.c -o cbt -lm",
+      "run": "/usr/bin/timeout -k 1s -s 9 1s ./cbt",
+      "input": "99\r\n-19 -29 2 89 31 37 82 -71 99 -33 64 96 64 -3 -93 -94 33 71 -46 -72 -17 -39 24 80 -5 53 -56 -67 -59 -39 35 -11 84 81 -32 -88 -100 53 -78 -91 -50 -82 19 -73 -9 -47 -42 15 0 -29 -33 94 36 56 42 97 -54 -39 55 37 21 89 17 92 -82 91 75 93 10 -97 95 61 -36 -29 1 43 27 -39 -14 -80 -59 29 87 -14 -53 -97 84 77 53 91 -36 -32 15 6 25 17 -50 -29 -9 -48 ",
+      "output": "92\r\n-82\r\n-11\r\n91\r\n75\r\n84\r\n-94\r\n93\r\n10\r\n81\r\n-97\r\n95\r\n-32\r\n33\r\n-71\r\n61\r\n-36\r\n-88\r\n-29\r\n1\r\n-100\r\n71\r\n43\r\n27\r\n53\r\n-39\r\n-14\r\n-78\r\n-46\r\n99\r\n89\r\n-80\r\n-59\r\n-91\r\n29\r\n87\r\n-50\r\n-72\r\n-14\r\n-53\r\n-82\r\n-97\r\n84\r\n19\r\n-17\r\n-33\r\n77\r\n53\r\n-73\r\n91\r\n-36\r\n-9\r\n-39\r\n-32\r\n15\r\n-47\r\n6\r\n25\r\n-42\r\n24\r\n64\r\n31\r\n-29\r\n17\r\n-50\r\n15\r\n-29\r\n-9\r\n0\r\n80\r\n-29\r\n-33\r\n-5\r\n96\r\n94\r\n36\r\n53\r\n56\r\n42\r\n-56\r\n64\r\n37\r\n97\r\n-54\r\n-67\r\n-39\r\n55\r\n-59\r\n-3\r\n37\r\n21\r\n-39\r\n89\r\n17\r\n35\r\n-93\r\n82\r\n2\r\n-19\r\n93\r\n10\r\n81\r\n",
+      "comparison": "exact",
+      "timeout": 1,
+      "points": 3
+    }
+  ]
+}

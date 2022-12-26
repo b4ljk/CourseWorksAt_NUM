@@ -1,0 +1,24 @@
+{
+  "tests": [
+    {
+      "name": "small test",
+      "setup": "cp /home/gantulgag/hash_test/small/*.txt .; cp /home/gantulgag/hash_test/small/student.info .; mv -v output.txt test.out && gcc main.c list.c hash.c -lm && /usr/bin/timeout -k 2s -s 9 2s ./a.out",
+      "run": "diff -q test.out output.txt",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 1,
+      "points": 5
+    },
+    {
+      "name": "big test",
+      "setup": "cp /home/gantulgag/hash_test/big/*.txt .; cp /home/gantulgag/hash_test/big/student.info .; mv -v output.txt test.out && gcc main.c list.c hash.c -lm && /usr/bin/timeout -k 3s -s 9 3s ./a.out",
+      "run": "diff -q test.out output.txt",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 100,
+      "points": 5
+    }
+  ]
+}
