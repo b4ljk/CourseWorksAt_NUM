@@ -1,371 +1,266 @@
-
-#include <GLUT/glut.h>
+#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <time.h>
+#include <cmath>
 
-#define far
-#define near
-#define FAR far
-#define NEAR near
+//#include <GL/gl.h>
+#include <GLUT/glut.h>
+//#include <GL/glu.h>
 
-typedef unsigned char BYTE;
-typedef unsigned char byte;
+static int animationPeriod = 4;
+static int isAnimate = 0;
 
-double axisY = 0;
-double axisX = 0;
-int num_texture = -1;
+const int fact = 3;
+const int x = 80;
+const double DEG2RAD = 3.1415926535897932384/180;
 
-GLuint obj;
-GLuint image;
+static double w = 200;
+static int flag = 0;
+static int walk = 0;
+static int x_ = 2500;
+using namespace std;
 
-typedef struct tagRGBTRIPLE {
-  BYTE rgbtBlue;
-  BYTE rgbtGreen;
-  BYTE rgbtRed;
-} RGBTRIPLE, *PRGBTRIPLE, NEAR *NPRGBTRIPLE, FAR *LPRGBTRIPLE;
-
-typedef struct vertex {
-  GLfloat x;
-  GLfloat y;
-  GLfloat z;
-} Vertex;
-
-typedef struct normal {
-  GLfloat x;
-  GLfloat y;
-  GLfloat z;
-} Normal;
-
-typedef struct texture {
-  GLfloat x;
-  GLfloat y;
-} Texture;
-
-typedef struct face {
-  GLint v1, v2, v3, v4;
-  GLint n1, n2, n3, n4;
-  GLint t1, t2, t3, t4;
-} Face;
-
-GLuint loadBMP_custom(const char *imagepath) {
-  unsigned char header[54];
-  unsigned int dataPos;
-  unsigned int width, height;
-  unsigned int imageSize;
-  unsigned char *l_texture;
-  unsigned char *data;
-
-  printf("filename: %s\n", imagepath);
-  FILE *file = fopen(imagepath, "rb");
-  if (!file) {
-    printf("Image could not be opened\n");
-    return 0;
-  } else {
-    printf("Image opened\n");
-  }
-
-  if (fread(header, 1, 54, file) != 54) {
-    printf("Not correct\n");
-    return false;
-  }
-
-  if (header[0] != 'B' || header[1] != 'M') {
-    printf("Not correct\n");
-    return 0;
-  }
-  RGBTRIPLE rgb;
-  int j = 0;
-    dataPos = *(int *)&(header[0x0A]);
-    imageSize = *(int *)&(header[0x22]);
-    width = *(int *)&(header[0x12]);
-    height = *(int *)&(header[0x16]);
-
-  l_texture = (byte *)malloc(width * height * 4);
-
-  // And fill it with zeros
-  memset(l_texture, 0, width * height * 4);
-  // At this point we can read every pixel of the image
-    j=0;
-  for (int i = 0; i < width * height; i++) {
-    // We load an RGB value from the file
-    fread(&rgb, sizeof(rgb), 1, file);
-
-    // And store it
-    l_texture[j + 0] = rgb.rgbtRed;   // Red component
-    l_texture[j + 1] = rgb.rgbtGreen; // Green component
-    l_texture[j + 2] = rgb.rgbtBlue;  // Blue component
-    l_texture[j + 3] = 255;           // Alpha value
-    j += 4;                           // Go to the next position
-  }
-
- 
-  data = new unsigned char[imageSize];
-
-  fread(data, 1, imageSize, file);
-
-  fclose(file);
-
-  GLuint textureID;
-  glGenTextures(1, &textureID);
-
-  glBindTexture(GL_TEXTURE_2D, textureID);
-
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR,
-               GL_UNSIGNED_BYTE, data);
-
-  glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,
-                  GL_REPEAT); // If the u,v coordinates overflow the range 0,1
-                              // the image is repeated
-  glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-  glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
-                  GL_LINEAR); // The magnification function ("linear" produces
-                              // better results)
-  glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
-                  GL_LINEAR_MIPMAP_NEAREST); // The minifying function
-
-  glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-
-  glTexImage2D(GL_TEXTURE_2D, 0, 4, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE,
-               l_texture);
-
-  gluBuild2DMipmaps(GL_TEXTURE_2D, 4, width, height, GL_RGBA, GL_UNSIGNED_BYTE,
-                    l_texture);
-
-  // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-  // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-  // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-  // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-  return textureID;
-}
-
-void DrawObj(FILE *fp) {
-  glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity(); // Initialize the model matrix as identity
-
-  obj = glGenLists(1);
-
-  char ch;
-  int i;
-  int res;
-  int id_texture;
-
-  Vertex *vertex = (Vertex *)malloc(1 * sizeof(Vertex));
-  int Ivertex = 0;
-
-  Normal *normal = (Normal *)malloc(1 * sizeof(Normal));
-  int Inormal = 0;
-
-  Texture *texture = (Texture *)malloc(1 * sizeof(Texture));
-  int Itexture = 0;
-
-  Face *face = (Face *)malloc(1 * sizeof(Face));
-  int temp = 0;
-
-  glColor3f(0.8, 0.2, 0.4);
-  glNewList(obj, GL_COMPILE);
-  while (1) {
-    char lineHeader[128];
-    res = fscanf(fp, "%s", lineHeader);
-    if (res == EOF)
-      break;
-
-    if (strcmp(lineHeader, "v") == 0) {
-      fscanf(fp, " %f %f %f", &vertex[Ivertex].x, &vertex[Ivertex].y,
-             &vertex[Ivertex].z);
-
-      Ivertex++;
-      vertex = (Vertex *)realloc(vertex, (Ivertex + 1) * sizeof(Vertex));
-    } else if (strcmp(lineHeader, "vn") == 0) {
-      fscanf(fp, " %f %f %f", &normal[Inormal].x, &normal[Inormal].y,
-             &normal[Inormal].z);
-
-      Inormal++;
-      normal = (Normal *)realloc(normal, (Inormal + 1) * sizeof(Normal));
-    } else if (strcmp(lineHeader, "vt") == 0) {
-      fscanf(fp, " %f %f", &texture[Itexture].x, &texture[Itexture].y);
-
-      Itexture++;
-      texture = (Texture *)realloc(texture, (Itexture + 1) * sizeof(Texture));
-    } else if (strcmp(lineHeader, "f") == 0) {
-      fscanf(fp, " %d/%d/%d %d/%d/%d %d/%d/%d %d/%d/%d", &face[temp].v1,
-             &face[temp].t1, &face[temp].n1, &face[temp].v2, &face[temp].t2,
-             &face[temp].n2, &face[temp].v3, &face[temp].t3, &face[temp].n3,
-             &face[temp].v4, &face[temp].t4, &face[temp].n4);
-
-      temp++;
-      face = (Face *)realloc(face, (temp + 1) * sizeof(Face));
+void animate(int value){
+    if(isAnimate){
+        glutPostRedisplay();
+        glutTimerFunc(animationPeriod, animate, 1);
     }
-  }
-
-  printf("%d", image);
-  glBindTexture(GL_TEXTURE_2D, image); // We set the active texture
-
-  glBegin(GL_QUADS);
-  for (i = 0; i < temp - 1; i++) {
-    glTexCoord2f(texture[face[i].t1 - 1].x, texture[face[i].t1 - 1].y);
-    glNormal3f(normal[face[i].n1 - 1].x, normal[face[i].n1 - 1].y,
-               normal[face[i].n1 - 1].z);
-    glVertex3f(vertex[face[i].v1 - 1].x, vertex[face[i].v1 - 1].y,
-               vertex[face[i].v1 - 1].z);
-
-    glTexCoord2f(texture[face[i].t2 - 1].x, texture[face[i].t2 - 1].y);
-    glNormal3f(normal[face[i].n2 - 1].x, normal[face[i].n2 - 1].y,
-               normal[face[i].n2 - 1].z);
-    glVertex3f(vertex[face[i].v2 - 1].x, vertex[face[i].v2 - 1].y,
-               vertex[face[i].v2 - 1].z);
-
-    glTexCoord2f(texture[face[i].t3 - 1].x, texture[face[i].t3 - 1].y);
-    glNormal3f(normal[face[i].n3 - 1].x, normal[face[i].n3 - 1].y,
-               normal[face[i].n3 - 1].z);
-    glVertex3f(vertex[face[i].v3 - 1].x, vertex[face[i].v3 - 1].y,
-               vertex[face[i].v3 - 1].z);
-
-    glTexCoord2f(texture[face[i].t4 - 1].x, texture[face[i].t4 - 1].y);
-    glNormal3f(normal[face[i].n4 - 1].x, normal[face[i].n4 - 1].y,
-               normal[face[i].n4 - 1].z);
-    glVertex3f(vertex[face[i].v4 - 1].x, vertex[face[i].v4 - 1].y,
-               vertex[face[i].v4 - 1].z);
-  }
-  glEnd();
-
-  // glBegin(GL_POINTS);
-  // for (i = 0; i < Ivertex; i++){
-  //     glVertex3f(vertex[i].x, vertex[i].y, vertex[i].z);
-  // }
-  // glEnd();
-
-  glEndList();
-  // glFlush(); // This force the execution of OpenGL commands
-  // glutSwapBuffers(); // In double buffered mode we invert the positions of
-  // the visible buffer and the writing buffer
-
-  free(vertex);
-  free(normal);
-  free(texture);
-  free(face);
 }
 
-void Draw() {
-  glPushMatrix();
-  glTranslatef(0, -2, 0);
-  glScalef(0.4, 0.4, 0.4);
-  glRotatef(axisX, 1.0, 0.0, 0.0);
-  glRotatef(axisY, 0.0, 1.0, 0.0);
-  glCallList(obj);
-  glPopMatrix();
+void keyInput(unsigned char key , int x, int y){
+    switch(key){
+    case 27:
+        exit(0);
+    case ' ':
+        if(isAnimate) isAnimate = 0;
+        else{
+            isAnimate = 1;
+            animate(1);
+        }
+        break;
+    }
+}
+bool collision(double len){
+    if(abs(157 + x - (x_ + x + 50)) <= 100 + x){
+        if(5 * fact + w <= 650 * len)return 1;
+        return 0;
+    }
+    return 0;
 }
 
-void display(void) {
-  glClearColor(0.0, 0.0, 0.0, 1.0);
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  Draw();
-  glutSwapBuffers();
+void specialKeyInput(int key , int x , int y ){
+    if( key == GLUT_KEY_UP && flag==0 && w <= 200.0){
+        flag  = 1;
+    }
+    glutPostRedisplay();
 }
 
-void WindowSize(GLsizei w, GLsizei h) {
-  if (h == 0)
-    h = 1;
-  glViewport(0, 0, w, h);
-
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  gluOrtho2D(-100.0f, 100.0f, -100.0f, 100.0f);
+void draw_circle(double theta, double inner_radius, double outer_radius, int x, int y, int sin_sign = 1, int cos_sign = 1){
+   glBegin(GL_POINTS);
+   glColor3f(0.0/ 255.0, 0.0/ 255.0, 0.0/ 255.0);
+   for(double r = outer_radius; r >= inner_radius; r -= 3.0){
+        for(double i = 0; i < theta ; i++){
+          double degInRad = i * DEG2RAD;
+          glVertex2f( cos_sign * cos(degInRad) * r + x , sin_sign * sin(degInRad) * r + y  );
+       }
+   }
+   glEnd();
 }
 
-void Keyboard(unsigned char key, int x, int y) {
-  if (key == 27)
-    exit(0);
+void generate_tree(int x_, double len){
+    int x = 30;
+    glColor3f((0) / 255.0, (0) / 255.0, (0) / 255.0);
+    glBegin(GL_POLYGON);
+        glVertex2f(x_, 250 * len);
+        glVertex2f(x_ + x, 250 * len);
+        glVertex2f(x_ + x, 650 * len);
+        glVertex2f(x_, 650 * len);
+    glEnd();
 
-  else if (key == 'd') {
-    axisY += 5;
-  }
+    draw_circle(180.0, 0.0, x / 2, x_ + x / 2, 650 * len);
 
-  else if (key == 'a') {
-    axisY -= 5;
-  }
+    glBegin(GL_POLYGON);
+        glVertex2f(x_ + x + 25, 400 * len);
+        glVertex2f(x_ + x + 50, 400 * len);
+        glVertex2f(x_ + x + 50, 600 * len);
+        glVertex2f(x_ + x + 25, 600 * len);
+    glEnd();
 
-  else if (key == 'w') {
-    axisX += 5;
-  }
+    draw_circle(180.0, 0.0, 25.0 / 2, x_ + x + 75.0 / 2, 600 * len);
 
-  else if (key == 's') {
-    axisX -= 5;
-  }
-  glutPostRedisplay();
+    glBegin(GL_POLYGON);
+        glVertex2f(x_ - 25, 400 * len);
+        glVertex2f(x_ - 50, 400 * len);
+        glVertex2f(x_ - 50, 600 * len);
+        glVertex2f(x_ - 25, 600 * len);
+    glEnd();
+
+    draw_circle(180.0, 0.0, 25.0 / 2, x_ - 75.0 / 2, 600 * len);
+    draw_circle(90.0, 25, 50, x_ + x, 400 * len, -1);
+    draw_circle(90.0, 25, 50, x_, 400 * len, -1, -1);
 }
 
-void mouse(int button, int state, int x, int y) {
- 
-  if (button == 3)
-    glScalef(1.1, 1.1, 1.1);
-  else if (button == 2)
-    glScalef(0.9, 0.9, 0.9);
-  glutPostRedisplay();
+void reset(){
+    w = 200;
+    flag = 0;
+    walk = 0;
+    x_ = 2500;
+    animationPeriod = 4;
+    isAnimate = 0;
+}
+void render( void ){
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    glPointSize(2);
+    glBegin(GL_POINTS);
+        glColor3f((0) / 255.0, (0) / 255.0, (0) / 255.0);
+        for(int i = 0; i < 100; i++){
+            glVertex2f(rand() % 2000, 200);
+            glVertex2f((rand() + 31) % 2000, 150);
+        }
+    glEnd();
+
+    generate_tree(x_, 1.0);
+
+
+    if(x_>= 0)
+        x_ -= 5;
+    else{
+        x_ = 2000 + rand()%400;
+    }
+    glLineWidth(2);
+    glBegin(GL_LINES);
+        glColor3f((0) / 255.0, (0) / 255.0, (0) / 255.0);
+        glVertex2f(0, 250);
+        glVertex2f(2000, 250);
+    glEnd();
+
+    glLineWidth(10);
+    glBegin(GL_LINES);
+        glColor3f(0 / 255.0, 0 / 255.0, 0 / 255.0);
+
+        glVertex2f(10 + x, 75 * fact + w);
+        glVertex2f(10 + x, 45 * fact + w);
+        glVertex2f(15 + x, 65 * fact + w);
+        glVertex2f(15 + x, 40 * fact + w);
+        glVertex2f(20 + x, 60 * fact + w);
+        glVertex2f(20 + x, 35 * fact + w);
+        glVertex2f(25 + x, 55 * fact + w);
+        glVertex2f(25 + x, 35 * fact + w);
+        glVertex2f(30 + x, 55 * fact + w);
+        glVertex2f(30 + x, 35 * fact + w);
+        glVertex2f(35 + x, 55 * fact + w);
+        glVertex2f(35 + x, 25 * fact + w);
+        glVertex2f(40 + x, 60 * fact + w);
+        glVertex2f(40 + x, 5 * fact + w-walk);
+        glVertex2f(45 + x, 65 * fact + w);
+        glVertex2f(45 + x, 15 * fact + w);
+        glVertex2f(45 + x, 10 * fact + w-walk);
+        glVertex2f(45 + x, 5 * fact + w-walk);
+        glVertex2f(50 + x, 10 * fact + w-walk);
+        glVertex2f(50 + x, 5 * fact + w-walk);
+        glVertex2f(55 + x, 10 * fact + w-walk);
+        glVertex2f(55 + x, 5 * fact + w-walk);
+        glVertex2f(50 + x, 65 * fact + w);
+        glVertex2f(50 + x, 20 * fact + w);
+        glVertex2f(55 + x, 70 * fact + w);
+        glVertex2f(55 + x, 25 * fact + w);
+        glVertex2f(63 + x, 75 * fact + w);
+        glVertex2f(63 + x, 20 * fact + w);
+        glVertex2f(70 + x, 115 * fact + w);
+        glVertex2f(70 + x, 5 * fact + w+walk);
+        glVertex2f(78 + x, 120 * fact + w);
+        glVertex2f(78 + x, 25 * fact + w);
+        glVertex2f(78 + x, 10 * fact + w+walk);
+        glVertex2f(78 + x, 5 * fact + w+walk);
+        glVertex2f(85 + x, 10 * fact + w+walk);
+        glVertex2f(85 + x, 5 * fact + w+walk);
+        glVertex2f(87 + x, 120 * fact + w);
+        glVertex2f(87 + x, 115 * fact + w);
+        glVertex2f(87 + x, 110 * fact + w);
+        glVertex2f(87 + x, 30 * fact + w);
+        glVertex2f(95 + x, 120 * fact + w);
+        glVertex2f(95 + x, 35 * fact + w);
+        glVertex2f(103 + x, 120 * fact + w);
+        glVertex2f(103 + x, 75 * fact + w);
+        glVertex2f(103 + x, 65 * fact + w);
+        glVertex2f(103 + x, 60 * fact + w);
+        glVertex2f(110 + x, 65 * fact + w);
+        glVertex2f(110 + x, 60 * fact + w);
+        glVertex2f(118 + x, 65 * fact + w);
+        glVertex2f(118 + x, 55 * fact + w);
+        glVertex2f(112 + x, 120 * fact + w);
+        glVertex2f(112 + x, 85 * fact + w);
+        glVertex2f(112 + x, 80 * fact + w);
+        glVertex2f(112 + x, 75 * fact + w);
+        glVertex2f(120 + x, 120 * fact + w);
+        glVertex2f(120 + x, 85 * fact + w);
+        glVertex2f(120 + x, 80 * fact + w);
+        glVertex2f(120 + x, 75 * fact + w);
+        glVertex2f(126 + x, 120 * fact + w);
+        glVertex2f(126 + x, 85 * fact + w);
+        glVertex2f(126 + x, 80 * fact + w);
+        glVertex2f(126 + x, 75 * fact + w);
+        glVertex2f(135 + x, 120 * fact + w);
+        glVertex2f(135 + x, 85 * fact + w);
+        glVertex2f(135 + x, 80 * fact + w);
+        glVertex2f(135 + x, 75 * fact + w);
+        glVertex2f(142 + x, 120 * fact + w);
+        glVertex2f(142 + x, 85 * fact + w);
+        glVertex2f(150 + x, 120 * fact + w);
+        glVertex2f(150 + x, 85 * fact + w);
+        glVertex2f(157 + x, 115 * fact + w);
+        glVertex2f(157 + x, 85 * fact + w);
+
+    glEnd();
+
+    if(collision(1.0)){
+        reset();
+    }
+    if( w <=200){
+        if(walk==-20 )
+            walk = 20;
+        else{
+            walk = -20;
+        }
+    }
+    else{
+        walk = 0;
+    }
+
+    if(flag==1){
+        if(w<=1000 ){
+            w = w + 8;
+        }
+        else {
+            flag = 0;
+        }
+    }
+    else if(w >= 200 )
+        w = w - 8;
+    glFlush();
 }
 
-void init() {
 
-  glShadeModel(GL_SMOOTH);
-  glLoadIdentity();
-  glPolygonMode(GL_FRONT_AND_BACK,
-                GL_FILL);  // Polygon rasterization mode (polygon filled)
-  glEnable(GL_TEXTURE_2D); // This Enable the Texture mapping
-  // Light values and coordinates
-  GLfloat whiteLight[] = {0.05f, 0.05f, 0.05f, 1.0f};
-  GLfloat sourceLight[] = {0.25f, 0.25f, 0.25f, 1.0f};
-  GLfloat lightPos[] = {-10.f, 5.0f, 5.0f, 1.0f};
-
-  glEnable(GL_DEPTH_TEST); // Hidden surface removal
-  glFrontFace(GL_CW);      // Counter clock-wise polygons face out
-  glEnable(GL_CULL_FACE);  // Do not calculate inside
-
-  // Enable lighting
-  glEnable(GL_LIGHTING);
-
-//  image = loadBMP_custom("/Users/baljinnyamdayan/Downloads/Texture.bmp");
-
-  // Setup and enable light 0
-  glLightModelfv(GL_LIGHT_MODEL_AMBIENT, whiteLight);
-  glLightfv(GL_LIGHT0, GL_AMBIENT, sourceLight);
-  glLightfv(GL_LIGHT0, GL_DIFFUSE, sourceLight);
-  glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
-  glEnable(GL_LIGHT0);
-
-  // Enable color tracking
-  glEnable(GL_COLOR_MATERIAL);
-
-  // Set Material properties to follow glColor values
-  glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
-  // Black blue background
-  glClearColor(0.25f, 0.25f, 0.50f, 1.0f);
+void setup(void){
+    glClearColor(1.0, 1.0, 1.0, 0.0);
+    glMatrixMode(GL_PROJECTION);
+    gluOrtho2D(0.0, 2000, 0.0, 2000);
 }
 
-int main(int argc, char **argv) {
+int main( int argc , char** argv ){
+    srand(time(NULL));
+    glutInit( &argc, argv );
+    glutInitDisplayMode( GLUT_SINGLE | GLUT_RGBA );
+    glutInitWindowSize( 1230, 650 );
+    glutInitWindowPosition( 50 , 0 );
+    glutCreateWindow("Dinosaur!!");
+    setup();
+    glutDisplayFunc(render);
 
-  // char *path = (char *)malloc(128 * sizeof(char));
-  // puts("NAME!!!: ");
-  // scanf(" %s", path);
-  FILE *fp = fopen("/Users/baljinnyamdayan/Downloads/Character.obj", "r");
+    glutKeyboardFunc(keyInput);
+    glutSpecialFunc(specialKeyInput);
 
-  glutInit(&argc, argv);
-  glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-
-  glutInitWindowSize(600, 800);
-  glutInitWindowPosition(0, 0);
-  glutCreateWindow(".obj file");
-  init();
-  glEnable(GL_CULL_FACE);
-
-  glutDisplayFunc(display);
-  glutKeyboardFunc(Keyboard);
-  glutMouseFunc(mouse);
-
-  DrawObj(fp);
-  fclose(fp);
-
-  glutMainLoop();
-
-  return 0;
+    glutMainLoop();
 }
