@@ -1,2 +1,5 @@
-# I will be adding some homeworks which are done at num.
+# Some of works done at National University of Mongolia
 
+```bash
+git clone https://github.com/b4ljk/Lecture_at_NUM.git
+```

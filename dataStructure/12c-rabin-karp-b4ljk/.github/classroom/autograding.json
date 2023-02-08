@@ -1,0 +1,74 @@
+{
+  "tests": [
+    {
+      "name": "test 1 (case insensitive)",
+      "setup": "cp /home/gantulgag/kmp/book.txt /home/gantulgag/kmp/BSD.out . && gcc mygrep.c -o mygrep -lm && /usr/bin/timeout -k 1s -s 9 1s ./mygrep -i bsd book.txt > out",
+      "run": "diff -q out BSD.out",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "test 2 small",
+      "setup": "cp /home/gantulgag/kmp/Mongolia.out . && gcc mygrep.c -o mygrep -lm && /usr/bin/timeout -k 1s -s 9 1s ./mygrep Mongolia SecretHistoryOfMongolia.txt  > out",
+      "run": "diff -q out Mongolia.out",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "test 3 (case sensitive)",
+      "setup": "cp /home/gantulgag/kmp/book.txt /home/gantulgag/kmp/bsd.out . && gcc mygrep.c -o mygrep -lm && /usr/bin/timeout -k 1s -s 9 1s ./mygrep bsd book.txt  > out",
+      "run": "diff -q out bsd.out",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "test 4 (case insensitive)",
+      "setup": "cp /home/gantulgag/kmp/book.txt /home/gantulgag/kmp/this.out . && gcc mygrep.c -o mygrep -lm && /usr/bin/timeout -k 1s -s 9 1s ./mygrep -i this book.txt  > out",
+      "run": "diff -q out this.out",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "test 5 (long, case sensitive)",
+      "setup": "cp /home/gantulgag/kmp/book.txt /home/gantulgag/kmp/key.out . && gcc mygrep.c -o mygrep -lm && /usr/bin/timeout -k 1s -s 9 1s ./mygrep '1AQO8bbnbmJLBDKveWHCoaeAkRzINzoD9wAn9z4pnilze59QtKC1cOqUksTvBSDh' book.txt  > out",
+      "run": "diff -q out key.out",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "test 6 (long, case insensitive)",
+      "setup": "cp /home/gantulgag/kmp/book.txt /home/gantulgag/kmp/long.out . && gcc mygrep.c -o mygrep -lm && /usr/bin/timeout -k 1s -s 9 1s ./mygrep -i '+----------------------------------------------------------------------+' book.txt  > out",
+      "run": "diff -q out long.out",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "test 7 (short, case insensitive)",
+      "setup": "cp /home/gantulgag/kmp/book.txt /home/gantulgag/kmp/is.out . && gcc mygrep.c -o mygrep -lm && /usr/bin/timeout -k 1s -s 9 1s ./mygrep -i is book.txt  > out",
+      "run": "diff -q out is.out",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 1,
+      "points": 2
+    }
+  ]
+}
