@@ -25,6 +25,7 @@ int main() {
   vector<string> row;
   vector<string> col;
   cin >> n;
+  vector<vector<double>> matrix;
   for (int i = 0; i < n; i++) {
     row.push_back("x" + to_string(i));
   }
@@ -35,12 +36,13 @@ int main() {
     for (int j = 0; j <= n; j++) {
       if (j == n) {
         cout << "hariu : ";
+        cin >> col[i];
       } else {
         cout << "x" << j << " = ";
+        cin >> matrix[i][j];
       }
     }
   }
-  vector<vector<double>> matrix;
 
   return 0;
 }
