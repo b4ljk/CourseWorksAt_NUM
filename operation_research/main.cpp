@@ -29,15 +29,15 @@ void printMatrix(int col, int row, vector<vector<double>> rs) {
 }
 
 int main() {
-  cout << "heden huvisagch ? ";
+  cout << "heden huvisagch : ";
   int n;
   vector<string> row;
   vector<string> col;
   cin >> n;
   for (int i = 0; i < n; i++) {
-    row.push_back("x" + to_string(i));
+    row.push_back("x" + to_string(i + 1));
   }
-  cout << "heden ilerhiilel ?";
+  cout << "heden ilerhiilel : ";
   int m;
   cin >> m;
   vector<vector<double>> matrix(m, vector<double>(n));
@@ -49,7 +49,7 @@ int main() {
         cin >> temp;
         col.push_back(temp);
       } else {
-        cout << "x" << j << " = ";
+        cout << "x" << j + 1 << " = ";
         cin >> matrix[i][j];
       }
     }
@@ -80,14 +80,25 @@ int main() {
       }
     }
     copy(matrix, copies);
-    printMatrix(n, m, matrix);
+    printMatrix(m, n, matrix);
   }
   for (int i = 0; i < m; i++) {
     double result;
+    string resultStr;
     for (int j = 0; j < n; j++) {
-      result = result + matrix[i][j] * stod(row[j]);
+      if (j >= m) {
+        resultStr =
+            resultStr + " + " + to_string(matrix[i][j]) + " * " + row[j];
+      } else {
+        result = result + matrix[i][j] * stod(row[j]);
+        resultStr = to_string(result);
+      }
     }
-    cout << col[i] << " = " << result << endl;
+    if (n > m) {
+      cout << col[i] << " = " << resultStr << endl;
+    } else {
+      cout << col[i] << " = " << result << endl;
+    }
   }
   return 0;
 }
