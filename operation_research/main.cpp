@@ -57,7 +57,24 @@ int main() {
   // ilerhiilliin toogoor bodolt hiigdne
   for (int i = 0; i < m; i++) {
     if (i == n) {
+      // shaardalagatai huvisagchuud utga onoogdson gej uzne
       break;
+    }
+    if (matrix[i][i] == 0) {
+      // herev gol huvisagch tegtei tentsuu bol ?
+      for (int j = i; j < m; j++) {
+        if (matrix[j][i] != 0) {
+          for (int k = 0; k < n; k++) {
+            double temp = matrix[i][k];
+            matrix[i][k] = matrix[j][k];
+            matrix[j][k] = temp;
+          }
+          string temp = col[i];
+          col[i] = col[j];
+          col[j] = temp;
+          break;
+        }
+      }
     }
     string temp;
     temp = col[i];
