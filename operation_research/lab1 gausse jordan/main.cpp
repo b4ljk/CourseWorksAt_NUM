@@ -11,7 +11,7 @@ double rowc(double n, double cnt) { return -(n / cnt); }
 double other(double cnt, double b, double c, double d) {
   return ((cnt * b) - (d * c)) / cnt;
 }
-void copy(vector<vector<double>> &rs, queue<double> temp) {
+void copy(vector<vector<double> > &rs, queue<double> temp) {
   for (int i = 0; i < rs.size(); i++) {
     for (int j = 0; j < rs[i].size(); j++) {
       rs[i][j] = temp.front();
@@ -19,7 +19,7 @@ void copy(vector<vector<double>> &rs, queue<double> temp) {
     }
   }
 }
-void printMatrix(int col, int row, vector<vector<double>> rs) {
+void printMatrix(int col, int row, vector<vector<double> > rs) {
   for (int i = 0; i < col; i++) {
     for (int j = 0; j < row; j++) {
       cout << rs[i][j] << " ";
@@ -40,7 +40,7 @@ int main() {
   cout << "heden ilerhiilel : ";
   int m;
   cin >> m;
-  vector<vector<double>> matrix(m, vector<double>(n));
+  vector<vector<double> > matrix(m, vector<double>(n));
   for (int i = 0; i < m; i++) {
     for (int j = 0; j <= n; j++) {
       if (j == n) {
