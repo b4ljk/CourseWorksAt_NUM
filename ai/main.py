@@ -1,6 +1,6 @@
 #! /usr/bin/python3
 
-
+import itertools
 # ********************************************************
 # Name:
 # Email address:
@@ -221,7 +221,11 @@ power_set(toppings) =>
 
 
 def power_set(lst):
-    pass
+    result = []
+    for i in range(0, len(lst) + 1):
+        combinations = itertools.combinations(lst, i)
+        result.extend([list(x) for x in combinations])
+    return result
 
     # ********************************************************
     # ** problem 6 ** (10 points)
@@ -248,7 +252,14 @@ def power_set(lst):
 
 
 def sumtree(tree):
-    pass
+    result = 0
+    for nums in tree:
+        if type(nums) is int:
+            result += nums
+        if type(nums) is list:
+            result += sumtree(nums)
+    return result
+
 # Replace the pass statement with your procedure(s).
 
 # ********************************************************
@@ -276,7 +287,12 @@ def sumtree(tree):
 
 
 def doubletree(tree):
-    pass
+    for idx, x in enumerate(tree):
+        if type(x) is int:
+            tree[idx] *= 2
+        if type(x) is list:
+            doubletree(x)
+    return tree
 # Replace the pass statement with your procedure(s).
 
 
@@ -303,7 +319,16 @@ def doubletree(tree):
 
 # ********************************************************
 def types(tree):
-    pass
+    myset = set()
+    for x in tree:
+        if type(x) is list:
+            z = set(types(x))
+            myset = myset.union(z)
+        else:
+            # print(type(x).__name__)
+            myset.add(type(x).__name__)
+    return sorted(list(myset))
+
 
 # Replace the pass statement with your procedure(s).
 
@@ -407,8 +432,14 @@ def revstr(str):
 
 
 def balanced(string):
-    pass
-
+    stk = stack()
+    for x in string:
+        if x == ")":
+            if (stk.pop() == "Error: stack is empty"):
+                return False
+        elif x == "(":
+            stk.push(x)
+    return stk.peek() == "Error: stack is empty"
 # ********************************************************
 # ** problem 10 ** (10 points)
 #
