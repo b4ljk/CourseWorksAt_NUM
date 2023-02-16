@@ -11,7 +11,7 @@ double rowc(double n, double cnt) { return -(n / cnt); }
 double other(double cnt, double b, double c, double d) {
   return ((cnt * b) - (d * c)) / cnt;
 }
-void copy(vector<vector<double>> &rs, queue<double> temp) {
+void copy(vector<vector<double> > &rs, queue<double> temp) {
   for (int i = 0; i < rs.size(); i++) {
     for (int j = 0; j < rs[i].size(); j++) {
       rs[i][j] = temp.front();
@@ -19,12 +19,38 @@ void copy(vector<vector<double>> &rs, queue<double> temp) {
     }
   }
 }
-void printMatrix(int col, int row, vector<vector<double>> rs) {
+void printMatrix(int col, int row, vector<vector<double> > rs) {
   for (int i = 0; i < col; i++) {
     for (int j = 0; j < row; j++) {
       cout << rs[i][j] << " ";
     }
     cout << endl;
+  }
+}
+
+void printResult(int n, int m,vector<vector<double> >& matrix, vector<string>& row, vector<string>& col){
+  
+  for (int i = 0; i < m; i++) {
+    double result = 0;
+    string resultStr;
+    for (int j = 0; j < n; j++) {
+      if (j >= m) {
+        resultStr =
+            resultStr + " + " + to_string(matrix[i][j]) + " * " + row[j];
+      } else {
+        try{
+          result = result + matrix[i][j] * stod(row[j]);
+        resultStr = to_string(result);
+        }catch(...){
+          
+        }
+      }
+    }
+    if (n > m) {
+      cout << col[i] << " = " << resultStr << endl;
+    } else {
+      cout << col[i] << " = " << result << endl;
+    }
   }
 }
 
@@ -40,7 +66,7 @@ int main() {
   cout << "heden ilerhiilel : ";
   int m;
   cin >> m;
-  vector<vector<double>> matrix(m, vector<double>(n));
+  vector<vector<double> > matrix(m, vector<double>(n));
   for (int i = 0; i < m; i++) {
     for (int j = 0; j <= n; j++) {
       if (j == n) {
@@ -62,19 +88,37 @@ int main() {
     }
     if (matrix[i][i] == 0) {
       // herev gol huvisagch tegtei tentsuu bol ?
-      for (int j = i; j < m; j++) {
-        if (matrix[j][i] != 0) {
-          for (int k = 0; k < n; k++) {
-            double temp = matrix[i][k];
-            matrix[i][k] = matrix[j][k];
-            matrix[j][k] = temp;
+      int rowval = i;
+
+      while(matrix[i][rowval]==0){
+        rowval++;
+        if(rowval>=n){
+          double result = 0;
+          for(int resx=0;resx<n;resx++){
+            try{
+              
+            result+=matrix[i][resx]*stod(row[resx]);
+            }catch(...){break;}
           }
-          string temp = col[i];
-          col[i] = col[j];
-          col[j] = temp;
-          break;
+          if(result==stod(col[i])){
+            printResult(n,m,matrix,row,col);
+          }else{
+            cout<<"\nniitsgui\n";
+          }
+          return 0;
         }
+        }
+      for(int colval = 0; colval<m;colval++){
+        double temp = matrix[colval][i];
+        matrix[colval][i]=matrix[colval][rowval];
+        matrix[colval][rowval]=temp;
       }
+      // huvisagchiig uurchluh (vector dotorh)
+      string temp = row[i];
+      row[i]=row[rowval];
+      row[rowval]=temp;
+      cout<<"------------\n";
+      printMatrix(m, n, matrix);
     }
     string temp;
     temp = col[i];
@@ -105,23 +149,7 @@ int main() {
     printMatrix(m, n, matrix);
     cout << "--------------\n";
   }
-  for (int i = 0; i < m; i++) {
-    double result = 0;
-    string resultStr;
-    for (int j = 0; j < n; j++) {
-      if (j >= m) {
-        resultStr =
-            resultStr + " + " + to_string(matrix[i][j]) + " * " + row[j];
-      } else {
-        result = result + matrix[i][j] * stod(row[j]);
-        resultStr = to_string(result);
-      }
-    }
-    if (n > m) {
-      cout << col[i] << " = " << resultStr << endl;
-    } else {
-      cout << col[i] << " = " << result << endl;
-    }
-  }
+
+  printResult(n,m,matrix,row,col);
   return 0;
 }
