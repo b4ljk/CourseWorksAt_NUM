@@ -94,14 +94,14 @@ int main() {
         rowval++;
         if(rowval>=n){
           double result = 0;
-          for(int resx=0;resx<n;resx++){
+          int resx;
+          for(resx=0;resx<n;resx++){
             try{
-              
             result+=matrix[i][resx]*stod(row[resx]);
             }catch(...){break;}
           }
           if(result==stod(col[i])){
-            printResult(n,m,matrix,row,col);
+            printResult(n,resx,matrix,row,col);
           }else{
             cout<<"\nniitsgui\n";
           }
