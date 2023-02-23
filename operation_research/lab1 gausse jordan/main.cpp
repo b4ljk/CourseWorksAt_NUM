@@ -11,7 +11,7 @@ double rowc(double n, double cnt) { return -(n / cnt); }
 double other(double cnt, double b, double c, double d) {
   return ((cnt * b) - (d * c)) / cnt;
 }
-void copy(vector<vector<double> > &rs, queue<double> temp) {
+void copy(vector<vector<double>> &rs, queue<double> temp) {
   for (int i = 0; i < rs.size(); i++) {
     for (int j = 0; j < rs[i].size(); j++) {
       rs[i][j] = temp.front();
@@ -19,17 +19,27 @@ void copy(vector<vector<double> > &rs, queue<double> temp) {
     }
   }
 }
-void printMatrix(int col, int row, vector<vector<double> > rs) {
+void printMatrix(int col, int row, vector<vector<double>> rs,
+                 vector<string> matrixColumn, vector<string> matrixRow) {
   for (int i = 0; i < col; i++) {
+    if (i == 0) {
+      cout << "\t";
+      for (int j = 0; j < row; j++) {
+        cout << matrixRow[j] << "\t";
+      }
+      cout << endl;
+    }
+    cout << matrixColumn[i] << "\t";
     for (int j = 0; j < row; j++) {
-      cout << rs[i][j] << " ";
+      cout << rs[i][j] << "\t";
     }
     cout << endl;
   }
 }
 
-void printResult(int n, int m,vector<vector<double> >& matrix, vector<string>& row, vector<string>& col){
-  
+void printResult(int n, int m, vector<vector<double>> &matrix,
+                 vector<string> &row, vector<string> &col) {
+
   for (int i = 0; i < m; i++) {
     double result = 0;
     string resultStr;
@@ -38,11 +48,10 @@ void printResult(int n, int m,vector<vector<double> >& matrix, vector<string>& r
         resultStr =
             resultStr + " + " + to_string(matrix[i][j]) + " * " + row[j];
       } else {
-        try{
+        try {
           result = result + matrix[i][j] * stod(row[j]);
-        resultStr = to_string(result);
-        }catch(...){
-          
+          resultStr = to_string(result);
+        } catch (...) {
         }
       }
     }
@@ -66,7 +75,7 @@ int main() {
   cout << "heden ilerhiilel : ";
   int m;
   cin >> m;
-  vector<vector<double> > matrix(m, vector<double>(n));
+  vector<vector<double>> matrix(m, vector<double>(n));
   for (int i = 0; i < m; i++) {
     for (int j = 0; j <= n; j++) {
       if (j == n) {
@@ -90,35 +99,37 @@ int main() {
       // herev gol huvisagch tegtei tentsuu bol ?
       int rowval = i;
 
-      while(matrix[i][rowval]==0){
+      while (matrix[i][rowval] == 0) {
         rowval++;
-        if(rowval>=n){
+        if (rowval >= n) {
           double result = 0;
           int resx;
-          for(resx=0;resx<n;resx++){
-            try{
-            result+=matrix[i][resx]*stod(row[resx]);
-            }catch(...){break;}
+          for (resx = 0; resx < n; resx++) {
+            try {
+              result += matrix[i][resx] * stod(row[resx]);
+            } catch (...) {
+              break;
+            }
           }
-          if(result==stod(col[i])){
-            printResult(n,resx,matrix,row,col);
-          }else{
-            cout<<"\nniitsgui\n";
+          if (result == stod(col[i])) {
+            printResult(n, resx, matrix, row, col);
+          } else {
+            cout << "\nniitsgui\n";
           }
           return 0;
         }
-        }
-      for(int colval = 0; colval<m;colval++){
+      }
+      for (int colval = 0; colval < m; colval++) {
         double temp = matrix[colval][i];
-        matrix[colval][i]=matrix[colval][rowval];
-        matrix[colval][rowval]=temp;
+        matrix[colval][i] = matrix[colval][rowval];
+        matrix[colval][rowval] = temp;
       }
       // huvisagchiig uurchluh (vector dotorh)
       string temp = row[i];
-      row[i]=row[rowval];
-      row[rowval]=temp;
-      cout<<"------------\n";
-      printMatrix(m, n, matrix);
+      row[i] = row[rowval];
+      row[rowval] = temp;
+      cout << "------------\n";
+      printMatrix(m, n, matrix, col, row);
     }
     string temp;
     temp = col[i];
@@ -146,10 +157,10 @@ int main() {
       }
     }
     copy(matrix, copies);
-    printMatrix(m, n, matrix);
-    cout << "--------------\n";
+    printMatrix(m, n, matrix, col, row);
+    cout << "--------------------------\n";
   }
 
-  printResult(n,m,matrix,row,col);
+  printResult(n, m, matrix, row, col);
   return 0;
 }
