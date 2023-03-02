@@ -452,40 +452,42 @@ def balanced(string):
 
 
 class queue:
-
     def __init__(self, stuff=[]):
-        pass
+        self.items = list(stuff)
 
     def __str__(self):
-        pass
+        return f"{self.items}"
 
     def __repr__(self):
-        pass
+        return f"Queue({self.items})"
 
     def isempty(self):
-        pass
+        return len(self.items) == 0
 
     def enqueue(self, item):
-        pass
+        self.items.append(item)
 
     def dequeue(self):
-        pass
+        if self.isempty():
+            return ("queue is empty")
+        return self.items.pop(0)
 
-    # return error message if queue is empty
     def peek(self):
-        pass
+        if self.isempty():
+            return "Queue is empty"
+        return self.items[0]
 
-    # define the iterator for queue.  Used in for or list comprehension
     def __iter__(self):
-        """Return iterator for the queue."""
-        pass
+        return iter(self.items)
 
     def __eq__(self, other):
-        pass
+        if isinstance(other, queue):
+            return self.items == other.items
+        return False
 
-    # copy constructor - clone the current instance
     def copy(self):
-        pass
+        return queue(self.items)
+
 
 # ********************************************************
 # ********************************************************
@@ -566,13 +568,13 @@ def main():
     test(sorted(power_set([1, 2, 3])),
          sorted([[], [3], [2], [2, 3], [1], [1, 3], [1, 2], [1, 2, 3]]))
     test(power_set([1, 2, 3, 4]),
-         [[], [1], [1, 2], [1, 2, 3], [1, 2, 3, 4], [1, 2, 4], [1, 3], [1, 3, 4], [1, 4], [2], [2, 3], [2, 3, 4], [2, 4], [3], [3, 4], [4]])
+         sorted([[], [1], [1, 2], [1, 2, 3], [1, 2, 3, 4], [1, 2, 4], [1, 3], [1, 3, 4], [1, 4], [2], [2, 3], [2, 3, 4], [2, 4], [3], [3, 4], [4]]))
     test(power_set([2, 2]), [[], [2], [2], [2, 2]])
 
     toppings = ['onion', 'peppers', 'bacon', 'sausage', 'mushroom']
 
     test(power_set(toppings),
-         [[], ['bacon'], ['bacon', 'mushroom'], ['bacon', 'sausage'], ['bacon', 'sausage', 'mushroom'], ['mushroom'], ['onion'], ['onion', 'bacon'], ['onion', 'bacon', 'mushroom'], ['onion', 'bacon', 'sausage'], ['onion', 'bacon', 'sausage', 'mushroom'], ['onion', 'mushroom'], ['onion', 'peppers'], ['onion', 'peppers', 'bacon'], ['onion', 'peppers', 'bacon', 'mushroom'], ['onion', 'peppers', 'bacon', 'sausage'], ['onion', 'peppers', 'bacon', 'sausage', 'mushroom'], ['onion', 'peppers', 'mushroom'], ['onion', 'peppers', 'sausage'], ['onion', 'peppers', 'sausage', 'mushroom'], ['onion', 'sausage'], ['onion', 'sausage', 'mushroom'], ['peppers'], ['peppers', 'bacon'], ['peppers', 'bacon', 'mushroom'], ['peppers', 'bacon', 'sausage'], ['peppers', 'bacon', 'sausage', 'mushroom'], ['peppers', 'mushroom'], ['peppers', 'sausage'], ['peppers', 'sausage', 'mushroom'], ['sausage'], ['sausage', 'mushroom']])
+         sorted([[], ['bacon'], ['bacon', 'mushroom'], ['bacon', 'sausage'], ['bacon', 'sausage', 'mushroom'], ['mushroom'], ['onion'], ['onion', 'bacon'], ['onion', 'bacon', 'mushroom'], ['onion', 'bacon', 'sausage'], ['onion', 'bacon', 'sausage', 'mushroom'], ['onion', 'mushroom'], ['onion', 'peppers'], ['onion', 'peppers', 'bacon'], ['onion', 'peppers', 'bacon', 'mushroom'], ['onion', 'peppers', 'bacon', 'sausage'], ['onion', 'peppers', 'bacon', 'sausage', 'mushroom'], ['onion', 'peppers', 'mushroom'], ['onion', 'peppers', 'sausage'], ['onion', 'peppers', 'sausage', 'mushroom'], ['onion', 'sausage'], ['onion', 'sausage', 'mushroom'], ['peppers'], ['peppers', 'bacon'], ['peppers', 'bacon', 'mushroom'], ['peppers', 'bacon', 'sausage'], ['peppers', 'bacon', 'sausage', 'mushroom'], ['peppers', 'mushroom'], ['peppers', 'sausage'], ['peppers', 'sausage', 'mushroom'], ['sausage'], ['sausage', 'mushroom']]))
 
     print('sumtree')
     test(sumtree([1, 2, 3]), 6)
@@ -642,7 +644,7 @@ def main():
     d.enqueue(2)
     test(d == d.copy(), True)
     test(d.peek(), 9)
-    test(d.data, [9, 1, 2])
+    test(d.items, [9, 1, 2])
     test([x for x in d], [9, 1, 2])
     test(2 in d, True)
     test(5 in d, False)
