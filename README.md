@@ -7,6 +7,8 @@
 3. [Mobile Programming](https://github.com/b4ljk/AndroidStudioProjects)
 4. [Object oriented programming](https://github.com/b4ljk/Lecture_at_NUM/tree/main/oop)
 
+## You can also contrbute to this repository
+
 ```bash
 git clone https://github.com/b4ljk/Lecture_at_NUM.git
 ```
