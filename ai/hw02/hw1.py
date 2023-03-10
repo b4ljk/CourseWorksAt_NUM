@@ -58,53 +58,65 @@ dirt.  The default value is 0.5 (50%).
 
 class NewVacuumEnvironment(VacuumEnvironment):
 
-    # call the parent constructor
-    # add Wall Things at the perimeter (can use inherited method)
-    # add random dirt in the interior (must write new method)
-    def __init__(self, width=5, height=5, bias=.5):
-        pass
+    def __init__(self, width=5, height=5, bias=0.5):
+        super().__init__(width, height)
+        self.bias = bias
+        self.add_walls()
+        self.add_random_dirt()
 
     def add_random_dirt(self):
-        pass
+        for x in range(self.x_start, self.x_end):
+            for y in range(self.y_start, self.y_end):
+                if random.random() < self.bias:
+                    self.add_thing(Dirt(), (x, y), True)
 
     def get_world(self):
         """Returns all the items in the world in a format
         understandable by the ipythonblocks BlockGrid."""
-        # see get_world() in GraphicEnvironment in agents.py
-        pass
+        result = []
+        x_start, y_start = (0, 0)
+        x_end, y_end = self.width, self.height
+        for x in range(x_start, x_end):
+            row = []
+            for y in range(y_start, y_end):
+                row.append(self.list_things_at((x, y)))
+
+            result.append(row)
+
+        return result
 
     def execute_action(self, agent, action):
         """Change agent's location and/or location's status; track performance.
-        Score 10 for each dirt cleaned; -1 for each move.
-
-        Possible actions include:
-           Suck, Right, Left, Up, Down
-
-        Cannot move through walls.  Easy there superman.
-        """
-        # execute_action() methods in TrivialVacuumEnvironment and elsewhere
-        x,y = agent.location
+        Score 10 for each dirt cleaned; -1 for each move."""
+        x, y = agent.location
         if action == 'Right':
-            if (x+1 < self.width):
-                agent.location = (x+1, y)
+            if x + 1 < self.width:
+                agent.location = (
+                 x + 1, y)
             agent.performance -= 1
-        elif action == 'Left':
-            if (x > 1):
-                agent.location = (x-1, y)
-            agent.performance -= 1
-        elif action == 'Up':
-            if (y > 1):
-                agent.location = (x, y-1)
-            agent.performance -= 1
-        elif action == 'Down':
-            if (y+1 < self.height):
-                agent.location = (x, y+1)
-            agent.performance -= 1
-
-        elif action == 'Suck':
-            if self.list_things_at(agent.location, Dirt):
-                agent.performance += 10
-                self.delete_thing(self.list_things_at(agent.location, Dirt)[0])
+        else:
+            if action == 'Left':
+                if x > 1:
+                    agent.location = (
+                     x - 1, y)
+                agent.performance -= 1
+            else:
+                if action == 'Up':
+                    if y > 1:
+                        agent.location = (
+                         x, y - 1)
+                    agent.performance -= 1
+                else:
+                    if action == 'Down':
+                        if y + 1 < self.height:
+                            agent.location = (
+                             x, y + 1)
+                        agent.performance -= 1
+                    else:
+                        if action == 'Suck':
+                            if self.list_things_at(agent.location, Dirt):
+                                agent.performance += 10
+                                self.delete_thing(self.list_things_at(agent.location, Dirt)[0])
 
 
 '''
@@ -115,10 +127,11 @@ your NewVacuumEnvironment, and includes the bias parameter.
 I included it because, well, I am a helluva nice guy.
 '''
 class GraphicVacuumEnvironment(NewVacuumEnvironment):
+
     def __init__(self, width=10, height=10, bias=0.5, boundary=True, color={}, display=False):
         """Define all the usual XYEnvironment characteristics,
         but initialise a BlockGrid for GUI too."""
-        super().__init__(width, height,bias=bias)
+        super().__init__(width, height, bias=bias)
         self.grid = BlockGrid(width, height, fill=(200, 200, 200))
         if display:
             self.grid.show()
@@ -135,7 +148,9 @@ class GraphicVacuumEnvironment(NewVacuumEnvironment):
             self.update(delay)
             if self.is_done():
                 break
-            self.step()
+            else:
+                self.step()
+
         self.update(delay)
 
     def update(self, delay=1):
@@ -159,7 +174,7 @@ class GraphicVacuumEnvironment(NewVacuumEnvironment):
         for x in range(0, len(world)):
             for y in range(0, len(world[x])):
                 if len(world[x][y]):
-                    self.grid[y, x] = self.colors[world[x][y][-1].__class__.__name__]
+                    self.grid[(y, x)] = self.colors[world[x][y][-1].__class__.__name__]
 
     def conceal(self):
         """Hide the BlockGrid for this world"""
@@ -175,8 +190,18 @@ Otherwise, the program randomly returns a direction to move: Left, Right, Up, Do
 '''
 
 def BetterReflexVacuumAgent():
+    """A reflex agent for the XY vacuum environment. 
+    >>> agent = BetterReflexVacuumAgent()
+    >>> environment = TrivialVacuumEnvironment()
+    >>> environment.add_thing(agent)
+    """
+
     def program(percept):
-        pass
+        status, location = percept
+        if status == 'Dirty':
+            return 'Suck'
+        return random.choice(['Left', 'Right', 'Up', 'Down'])
+
     return Agent(program)
 
 
@@ -188,7 +213,17 @@ examples.
 '''
 
 def TraceAgent(agent):
-    pass
+    """Wrap the agent's program to print its input and output. This will let
+    you see what the agent is doing in the environment."""
+    old_program = agent.program
+
+    def new_program(percept):
+        action = old_program(percept)
+        print('{} perceives {} and does {} at {}'.format(agent, percept, action, agent.location))
+        return action
+
+    agent.program = new_program
+    return agent
 
 
 

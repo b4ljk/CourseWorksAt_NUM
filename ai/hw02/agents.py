@@ -44,8 +44,11 @@ from time import sleep
 import random
 import copy
 import collections
-
-
+try:
+    from collections.abc import Callable  # noqa
+except ImportError:
+    from collections import Callable  # noqa
+collections.Callable = collections.abc.Callable
 # ______________________________________________________________________________
 
 
