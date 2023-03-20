@@ -84,20 +84,30 @@ def heuristic(node, goal):
 def astar(graph, start, goal, heuristic):
     visited = set()
     queue = PriorityQueue()
-    queue.put((0, start, [start]))
+    queue.put((0, start, [start],0))
     while not queue.empty():
-        cost, vertex, path = queue.get()
+        cost, vertex, path,actual_cost = queue.get()
         if vertex not in visited:
             if vertex == goal:
-                return path, cost
+                _actual_cost = 0
+                for idx,x in enumerate(path):
+                    if idx == len(path)-1:
+                        break
+                    _actual_cost += graph.graph_dict[x][path[idx+1]]
+                return path, _actual_cost, cost
             visited.add(vertex)
             for neighbor in graph.graph_dict[vertex]:
                 if neighbor not in visited:
-                    new_cost = cost + graph.graph_dict[vertex][neighbor]
+                    new_cost = actual_cost + graph.graph_dict[vertex][neighbor]
                     # buh neighbor-n huvid actual cost + heuristic cost nemeh baidlaar cost tootsoj
                     # priorityQueue-s hamgiin baha heuristics + actual cost buhii node garch ter zamaar yvsaar
                     # goal node ruu hurne
-                    queue.put((new_cost + heuristic(neighbor, goal), neighbor, path + [neighbor]))
+                    print("vertex : ", vertex);
+                    print("neightbor : ",neighbor)
+                    print("new_cost : ", new_cost)
+                    print("heuristic : ", heuristic(neighbor, goal))
+                    print("total : ", new_cost + heuristic(neighbor, goal))
+                    queue.put(((new_cost + heuristic(neighbor, goal)), neighbor, path + [neighbor], new_cost))
 
 romania_map = UndirectedGraph({
     'Arad': {'Zerind': 75, 'Sibiu': 140, 'Timisoara': 118},
@@ -142,8 +152,10 @@ ucs_path, ucs_cost = ucs(romania_map, 'Arad', 'Bucharest')
 for x in ucs_path:
     print(x, end=" => ")
 print("UCS Cost: ", ucs_cost)
-
-astar_path, astar_cost = astar(romania_map, 'Arad', 'Bucharest', heuristic)
+print("----------------------------")
+astar_path, astar_actual_cost,astar_cost = astar(romania_map, 'Arad', 'Bucharest', heuristic)
 for x in astar_path:
     print(x, end=" => ")
-print("A* Cost: ", astar_cost)
+print("A* actual Cost: ", astar_actual_cost)
+print("A* heuristic Cost: ", astar_cost)
+# ! HEURISTIC VALUE ASHIGLAHGUI, VERTEX NODE HURTELH WEIGHT + HEURISTIC baidlaar PRIORITY QUEUENEES GARGAH
