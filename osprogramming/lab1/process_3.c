@@ -1,4 +1,4 @@
-#include "header.h"
+#include "processheader.h"
 #include <stdio.h>
 
 void lettersInString(char *str) {

@@ -1,131 +1,101 @@
+
+from queue import PriorityQueue
+
 class UndirectedGraph:
-    def __init__(self, graph_dict=None):
-        """ initializes a graph object """
-        if graph_dict == None:
-            graph_dict = {}
-        self.__graph_dict = graph_dict
+    def __init__(self, graph_dict):
+        self.graph_dict = graph_dict
 
-    def vertices(self):
-        """ returns the vertices of a graph """
-        return list(self.__graph_dict.keys())
+    def get_vertices(self):
+        return list(self.graph_dict.keys())
 
-    def edges(self):
-        """ returns the edges of a graph """
-        return self.__generate_edges()
-
-    def add_vertex(self, vertex):
-        """ If the vertex "vertex" is not in
-            self.__graph_dict, a key "vertex" with an empty
-            list as a value is added to the dictionary.
-            Otherwise nothing has to be done.
-        """
-        if vertex not in self.__graph_dict:
-            self.__graph_dict[vertex] = []
-
-    def add_edge(self, edge):
-        """ assumes that edge is of type set, tuple or list;
-            between two vertices can be multiple edges!
-        """
-        edge = set(edge)
-        (vertex1, vertex2) = tuple(edge)
-        if vertex1 in self.__graph_dict:
-            self.__graph_dict[vertex1].append(vertex2)
-        else:
-            self.__graph_dict[vertex1] = [vertex2]
-        if vertex2 in self.__graph_dict:
-            self.__graph_dict[vertex2].append(vertex1)
-        else:
-            self.__graph_dict[vertex2] = [vertex1]
-
-    def __generate_edges(self):
-        """ A static method generating the edges of the
-            graph "graph". Edges are represented as sets
-            with one (a loop back to the vertex) or two
-            vertices
-        """
+    def get_edges(self):
         edges = []
-        for vertex in self.__graph_dict:
-            for neighbor in self.__graph_dict[vertex]:
-                if {neighbor, vertex} not in edges:
-                    edges.append({vertex, neighbor})
+        for vertex in self.graph_dict:
+            for neighbor, weight in self.graph_dict[vertex].items():
+                edges.append((vertex, neighbor, weight))
         return edges
 
-    def find_isolated_vertices(self):
-        """ returns a list of isolated vertices. """
-        graph = self.__graph_dict
-        isolated = []
-        for vertex in graph:
-            if not graph[vertex]:
-                isolated += [vertex]
-        return isolated
+def dfs(graph, start, goal):
+    visited = set()
+    stack = [(start, [start])]
+    while stack:
+        vertex, path = stack.pop()
+        if vertex not in visited:
+            if vertex == goal:
+                return path
+            visited.add(vertex)
+            for neighbor in graph.graph_dict[vertex]:
+                if neighbor not in visited:
+                    stack.append((neighbor, path + [neighbor]))
 
-    def __str__(self):
-        res = "vertices: "
-        for k in self.__graph_dict:
-            res += str(k) + " "
-        res += "edges: "
-        for edge in self.__generate_edges():
-            res += str(edge) + " "
-        return res
+def bfs(graph, start, goal):
+    visited = set()
+    queue = [(start, [start])]
+    while queue:
+        vertex, path = queue.pop(0)
+        if vertex not in visited:
+            if vertex == goal:
+                return path
+            visited.add(vertex)
+            for neighbor in graph.graph_dict[vertex]:
+                if neighbor not in visited:
+                    queue.append((neighbor, path + [neighbor]))
 
-    def dfs(self, start, end, path=[]):
-        path = path + [start]
-        if start == end:
-            yield path
-        for node in self.__graph_dict[start]:
-            if node not in path:
-                yield from self.dfs(node, end, path)
+def ucs(graph, start, goal):
+    visited = set()
+    queue = PriorityQueue()
+    queue.put((0, start, [start]))
+    while not queue.empty():
+        cost, vertex, path = queue.get()
+        if vertex not in visited:
+            if vertex == goal:
+                return path, cost
+            visited.add(vertex)
+            for neighbor in graph.graph_dict[vertex]:
+                if neighbor not in visited:
+                    new_cost = cost + graph.graph_dict[vertex][neighbor]
+                    queue.put((new_cost, neighbor, path + [neighbor]))
 
-    def bfs(self, start, end):
-        queue = [(start, [start])]
-        while queue:
-            (vertex, path) = queue.pop(0)
-            for next in set(self.__graph_dict[vertex]) - set(path):
-                if next == end:
-                    yield path + [next]
-                else:
-                    queue.append((next, path + [next]))
-    
-    def ucs(self, start, end):
-        queue = [(start, [start], 0)]
-        while queue:
-            (vertex, path, cost) = queue.pop(0)
-            for next in set(self.__graph_dict[vertex]) - set(path):
-                if next == end:
-                    yield path + [next], cost + self.__graph_dict[vertex][next]
-                else:
-                    queue.append((next, path + [next], cost + self.__graph_dict[vertex][next]))
-            queue.sort(key=lambda x: x[2])
-    
-    
-    
-    
-    
-    
+romania_map = UndirectedGraph({
+    'Arad': {'Zerind': 75, 'Sibiu': 140, 'Timisoara': 118},
+    'Zerind': {'Arad': 75, 'Oradea': 71},
+    'Oradea': {'Zerind': 71, 'Sibiu': 151},
+    'Timisoara': {'Arad': 118, 'Lugoj': 111},
+    'Lugoj': {'Timisoara': 111, 'Mehadia': 70},
+    'Mehadia': {'Lugoj': 70, 'Drobeta': 75},
+    'Drobeta': {'Mehadia': 75, 'Craiova': 120},
+    'Sibiu': {'Arad': 140, 'Oradea': 151, 'Fagaras': 99, 'Rimnicu': 80},
+    'Rimnicu': {'Sibiu': 80, 'Craiova': 146, 'Pitesti': 97},
+    'Craiova': {'Drobeta': 120, 'Rimnicu': 146, 'Pitesti': 138},
+    'Fagaras': {'Sibiu': 99, 'Bucharest': 211},
+    'Pitesti': {'Rimnicu': 97, 'Craiova': 138, 'Bucharest': 101},
+    'Bucharest': {'Fagaras': 211, 'Pitesti': 101, 'Giurgiu': 90, 'Urziceni': 85},
+    'Giurgiu': {'Bucharest': 90},
+    'Urziceni': {'Bucharest': 85, 'Hirsova': 98, 'Vaslui': 142},
+    'Hirsova': {'Urziceni': 98, 'Eforie': 86},
+    'Eforie': {'Hirsova': 86},
+    'Vaslui': {'Iasi': 92, 'Urziceni': 142},
+    'Iasi': {'Vaslui': 92, 'Neamt': 87},
+    'Neamt': {'Iasi': 87}
+})
 
-romania_map = UndirectedGraph(dict(
-    Arad=dict(Zerind=75, Sibiu=140, Timisoara=118),
-    Bucharest=dict(Urziceni=85, Pitesti=101, Giurgiu=90, Fagaras=211),
-    Craiova=dict(Drobeta=120, Rimnicu=146, Pitesti=138),
-    Drobeta=dict(Mehadia=75),
-    Eforie=dict(Hirsova=86),
-    Fagaras=dict(Sibiu=99),
-    Hirsova=dict(Urziceni=98),
-    Iasi=dict(Vaslui=92, Neamt=87),
-    Lugoj=dict(Timisoara=111, Mehadia=70),
-    Oradea=dict(Zerind=71, Sibiu=151),
-    Pitesti=dict(Rimnicu=97),
-    Rimnicu=dict(Sibiu=80),
-    Urziceni=dict(Vaslui=142)))
+dfs_path = dfs(romania_map, 'Arad', 'Bucharest')
+dfs_cost = 0
+for i in range(len(dfs_path)-1):
+    dfs_cost += romania_map.graph_dict[dfs_path[i]][dfs_path[i+1]]
+for x in dfs_path:
+    print(x, end=" => ")
+print("Dfs Cost: ", dfs_cost)
 
-print("DFS")
-for path in romania_map.dfs('Arad', 'Bucharest'):
-    print(path)
+bfs_path = bfs(romania_map, 'Arad', 'Bucharest')
+bfs_cost = 0
+for i in range(len(bfs_path)-1):
+    bfs_cost += romania_map.graph_dict[bfs_path[i]][bfs_path[i+1]]
+for x in bfs_path:
+    print(x, end=" => ")
+print("BFS Cost: ", bfs_cost)
 
-# print("BFS")
-# for path in romania_map.bfs('Arad', 'Bucharest'):
-#     print(path)
-
-# print("UCS")
-# for path in romania_map.ucs('Arad', 'Bucharest'):
-#     print(path)
+ucs_path, ucs_cost = ucs(romania_map, 'Arad', 'Bucharest')
+for x in ucs_path:
+    print(x, end=" => ")
+print("UCS Cost: ", ucs_cost)
