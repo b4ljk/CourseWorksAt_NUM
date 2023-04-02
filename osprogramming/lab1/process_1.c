@@ -1,5 +1,13 @@
 #include "processheader.h"
 
+struct PCB {
+  int process_id;      // Process ID
+  int priority;        // Process Priority
+  int state;           // Process State
+  int process_counter; // Process counter value
+  // Add other fields as necessery
+};
+
 void sortElements(int arr[], int n) {
   int i, j;
   for (i = 0; i < n; i++) {

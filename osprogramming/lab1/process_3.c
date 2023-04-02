@@ -1,6 +1,14 @@
 #include "processheader.h"
 #include <stdio.h>
 
+struct PCB {
+  int process_id;      // Process ID
+  int priority;        // Process Priority
+  int state;           // Process State
+  int process_counter; // Process counter value
+  // Add other fields as necessery
+};
+
 void lettersInString(char *str) {
   int i;
   int letters[26];
