@@ -10,8 +10,10 @@ using namespace std;
 string zuvDaraalal(string s) {
   if (s.size() < 2)
     return "";
+  // ! set uusgeh (set ni dahin davtagdahgui <char> baina)
   unordered_set<char> st(begin(s), end(s));
   for (int i = 0; i < s.size(); i++) {
+    // ! uussen set dotor tom esvel jijig huvilbar ni bhguig shalgaj bna
     if (st.find((char)toupper(s[i])) == end(st) ||
         st.find((char)tolower(s[i])) == end(st)) {
       string s1 = zuvDaraalal(s.substr(0, i));
