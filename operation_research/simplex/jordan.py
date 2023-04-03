@@ -21,9 +21,12 @@ def Jordan(row, col, matrix=[[]]):
             if rowidx == row and colidx == col:
                 queue.append(reverse(y))
             elif rowidx == row:
-                queue.append(column(y, matrix[row][col]))
-            elif colidx == col:
                 queue.append(row(y, matrix[row][col]))
+            elif colidx == col:
+                queue.append(column(y, matrix[row][col]))
             else:
                 queue.append(
                     others(matrix[row][col], y, matrix[row][colidx], matrix[rowidx][col]))
+    for rowidx, x in enumerate(matrix):
+        for colidx, y in enumerate(x):
+            matrix[rowidx][colidx] = queue.pop(0)
