@@ -3,10 +3,10 @@ def others(choosen, other_element, other_row, other_column):
 
 
 def column(column_element, choosen):
-    return -column_element/choosen
+    return -(column_element/choosen)
 
 
-def row(row_element, choosen):
+def row_function(row_element, choosen):
     return row_element/choosen
 
 
@@ -21,7 +21,7 @@ def Jordan(row, col, matrix=[[]]):
             if rowidx == row and colidx == col:
                 queue.append(reverse(y))
             elif rowidx == row:
-                queue.append(row(y, matrix[row][col]))
+                queue.append(row_function(y, matrix[row][col]))
             elif colidx == col:
                 queue.append(column(y, matrix[row][col]))
             else:
