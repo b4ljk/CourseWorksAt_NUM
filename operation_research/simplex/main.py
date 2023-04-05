@@ -125,7 +125,6 @@ def algorithm1(matrix=[[]]):
 
 
 def algorithm2(matrix=[[]]):
-    id = 0
     while isPositiveInRow(matrix):
         print("algorithm2")
         printMatrix(matrix)
@@ -140,7 +139,7 @@ def algorithm2(matrix=[[]]):
             positive_index = findPositiveViaCol(matrix, positive_elment_index)
             print(positive_index, "positive_index")
             if positive_index == -1:
-                print("No solution")
+                print("**No solution**")
                 return
 
             minimum_simplex = minimumSimplex(
@@ -151,18 +150,28 @@ def algorithm2(matrix=[[]]):
             print(minimum_simplex, "minimum_simplex")
             Jordan(minimum_simplex, positive_elment_index, matrix)
             break
-        id += 1
-        if id == 5:
-            break
 
 
+# matrix = [
+#     [-2, -2, -1, -2],
+#     [3, -3, 2, 6, ],
+#     [3, -3, -2, 6],
+#     [0, 1, -1, 1,],
+#     [-1, 1, 1, 0,],
+
+# ]
 matrix = [
-    [2, 1.5, 0.5, 0.5, 6.5],
-    [-3, -1, -1, 0, -3],
-    [3, -2, 0, 1, 6],
-    [-7, -1.5, -1.5, -1.5, -6.5],
+    [-2, 1, 6],
+    [-1, 1.5, 9],
+    [-1, 5, 30],
+    [-1, 1, 12,],
+    [2, 4, 0,],
 
 ]
 algorithm1(matrix)
 algorithm2(matrix)
 printMatrix(matrix)
+print("Result")
+matrixRows = len(matrix)
+matrixCols = len(matrix[0])
+print(-matrix[matrixRows-1][matrixCols - 1])
