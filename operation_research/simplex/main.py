@@ -23,10 +23,19 @@ def isPositiveInRow(matrix=[[]]):
     return False
 
 
-def printMatrix(matrix=[[]]):
-    for x in matrix:
-        print(x)
-    print("-----------------")
+def printMatrix(matrix=[[]], firstCol=[], firstRow=[]):
+    print(" ", end=" \t")
+    for x in firstRow:
+        print(x, end="\t")
+    print()
+    for idx, x in enumerate(matrix):
+        try:
+            print(firstCol[idx], end=" \t")
+            for y in x:
+                print("{:.1f}".format(y), end="\t")
+            print()
+        except:
+            print("ALDAA :", idx)
 
 
 def exchangeRowColVal(row, col, rowidx, colidx):
@@ -85,7 +94,6 @@ def findPositiveViaRow(matrix=[[]], rowidx=None):
 
 
 def minimumSimplex(col, matrix=[[]], algorithm=1, constantsColumn=None, rows_to_ignore=None):
-    print("in CALL : constantsCOlumn", constantsColumn, "col", col)
     result = []
     simplexDictionary = {}
     rowsAdded = False
@@ -99,9 +107,7 @@ def minimumSimplex(col, matrix=[[]], algorithm=1, constantsColumn=None, rows_to_
         if matind == len(matrix) - 1:
             continue
         if matind in rows_to_ignore:
-            print("SHIZEr", matind)
             continue
-        # print(constantsColumn, "constantsColumn")
         constantval = x[constantsColumn]
         divider = x[col]
         if divider == 0:
@@ -132,13 +138,11 @@ def minimumSimplex(col, matrix=[[]], algorithm=1, constantsColumn=None, rows_to_
         if constantsColumn == -1:
             print("No solution")
             return []
-        print("constantsColumn", constantsColumn, "col", col)
         return minimumSimplex(col, matrix, algorithm, constantsColumn, real_rows_to_ignore)
 
     if len(result) == 0:
         return -1
     result.sort(key=lambda x: x[0])
-    print(result, "result", result[0][1])
 
     # hervee simplex 0 bol
     while (len(result) > 0) and (result[0][0] == 0):
@@ -155,7 +159,7 @@ def minimumSimplex(col, matrix=[[]], algorithm=1, constantsColumn=None, rows_to_
     # tulguur shiid
 
 
-def algorithm1(matrix=[[]]):
+def algorithm1(matrix=[[]], firstCol=[], firstRow=[]):
     while not isPositiveViaCol(matrix):
         print("algorithm1")
         negative_element_in_column = findNegativeViaCol(matrix)
@@ -169,16 +173,18 @@ def algorithm1(matrix=[[]]):
         minimum_simplex = minimumSimplex(
             negative_element_in_row, matrix, 1)
         Jordan(minimum_simplex, negative_element_in_row, matrix)
+        exchangeRowColVal(
+            firstRow, firstCol, minimum_simplex, negative_element_in_row)
 
-        printMatrix(matrix)
+        printMatrix(matrix, firstCol=firstCol, firstRow=firstRow)
 
         # onovchtoi shiid
 
 
-def algorithm2(matrix=[[]]):
+def algorithm2(matrix=[[]], firstCol=[], firstRow=[]):
     while isPositiveInRow(matrix):
         print("algorithm2")
-        printMatrix(matrix)
+        printMatrix(matrix, firstCol=firstCol, firstRow=firstRow)
 
         positiveElm = findPositiveViaRow(matrix)
         print(positiveElm, "positiveElm")
@@ -200,6 +206,8 @@ def algorithm2(matrix=[[]]):
 
             print(minimum_simplex, "minimum_simplex")
             Jordan(minimum_simplex, positive_elment_index, matrix)
+            exchangeRowColVal(
+                firstRow, firstCol, minimum_simplex, positive_elment_index)
             # huvirgalt hiisen bol ahij busad shiid shalgah shaardlaggui break okay
             break
 
@@ -233,7 +241,7 @@ for i in range(num_cols):
 print("Enter the first col:")
 for i in range(num_rows):
     firstCol.append((input()))
-
+print("MATRIX BEGINS")
 for i in range(num_rows):
     a = []
     for j in range(num_cols):
@@ -241,9 +249,9 @@ for i in range(num_rows):
     matrix.append(a)
 
 
-algorithm1(matrix)
-algorithm2(matrix)
-printMatrix(matrix)
+algorithm1(matrix, firstCol, firstRow)
+algorithm2(matrix, firstCol, firstRow)
+printMatrix(matrix, firstCol, firstRow)
 print("Result")
 matrixRows = len(matrix)
 matrixCols = len(matrix[0])
