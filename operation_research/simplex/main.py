@@ -1,6 +1,10 @@
 from jordan import Jordan
 
 
+def remove_duplicates(lst):
+    return list(set(lst))
+
+
 def isPositiveViaCol(matrix=[[]]):
     for idx, x in enumerate(matrix):
         if idx == len(matrix) - 1:
@@ -23,6 +27,12 @@ def printMatrix(matrix=[[]]):
     for x in matrix:
         print(x)
     print("-----------------")
+
+
+def exchangeRowColVal(row, col, rowidx, colidx):
+    temp = row[colidx]
+    row[colidx] = col[rowidx]
+    col[rowidx] = temp
 
 
 def findNegativeViaCol(matrix=[[]], colidx=None):
@@ -74,25 +84,63 @@ def findPositiveViaRow(matrix=[[]], rowidx=None):
     return result
 
 
-def minimumSimplex(col, matrix=[[]], algorithm=1, constantsColumn=None):
+def minimumSimplex(col, matrix=[[]], algorithm=1, constantsColumn=None, rows_to_ignore=None):
+    print("in CALL : constantsCOlumn", constantsColumn, "col", col)
     result = []
-    column_elements = []
+    simplexDictionary = {}
+    rowsAdded = False
+    # default value
     if constantsColumn == None:
         constantsColumn = len(matrix[0]) - 1
+    if rows_to_ignore == None:
+        rows_to_ignore = []
+
     for matind, x in enumerate(matrix):
-        column_elements.append(x[col])
         if matind == len(matrix) - 1:
             continue
+        if matind in rows_to_ignore:
+            print("SHIZEr", matind)
+            continue
+        # print(constantsColumn, "constantsColumn")
         constantval = x[constantsColumn]
         divider = x[col]
         if divider == 0:
             continue
         val = constantval / divider
-        if val >= 0:
-            result.append([val, matind, divider])
+        if val in simplexDictionary:
+            rows_to_ignore.append(matind)
+            rows_to_ignore.append(simplexDictionary[val])
+            rowsAdded = True
+
+        else:
+            simplexDictionary[val] = matind
+        if constantsColumn == len(matrix[0]) - 1:
+            if val >= 0:
+                result.append([val, matind, divider, constantval])
+        else:
+            result.append([val, matind, divider, constantval])
+
+    if len(rows_to_ignore) > 0 and rowsAdded:
+        rows_to_ignore = remove_duplicates(rows_to_ignore)
+        real_rows_to_ignore = []
+        for idx, x in enumerate(matrix):
+            if idx not in rows_to_ignore:
+                real_rows_to_ignore.append(idx)
+        constantsColumn = constantsColumn-1
+        if constantsColumn == col:
+            constantsColumn = constantsColumn-1
+        if constantsColumn == -1:
+            print("No solution")
+            return []
+        print("constantsColumn", constantsColumn, "col", col)
+        return minimumSimplex(col, matrix, algorithm, constantsColumn, real_rows_to_ignore)
+
     if len(result) == 0:
         return -1
     result.sort(key=lambda x: x[0])
+    print(result, "result", result[0][1])
+
+    # hervee simplex 0 bol
     while (len(result) > 0) and (result[0][0] == 0):
         if algorithm == 1:
             result.pop(0)
@@ -121,6 +169,7 @@ def algorithm1(matrix=[[]]):
         minimum_simplex = minimumSimplex(
             negative_element_in_row, matrix, 1)
         Jordan(minimum_simplex, negative_element_in_row, matrix)
+
         printMatrix(matrix)
 
         # onovchtoi shiid
@@ -151,6 +200,7 @@ def algorithm2(matrix=[[]]):
 
             print(minimum_simplex, "minimum_simplex")
             Jordan(minimum_simplex, positive_elment_index, matrix)
+            # huvirgalt hiisen bol ahij busad shiid shalgah shaardlaggui break okay
             break
 
 
@@ -162,14 +212,35 @@ def algorithm2(matrix=[[]]):
 #     [-1, 1, 1, 0,],
 
 # ]
-matrix = [
-    [-2, 1, 6],
-    [-1, 1.5, 9],
-    [-1, 5, 30],
-    [-1, 1, 12,],
-    [2, 4, 0,],
+# matrix = [
+#     [-2, 1, 6],
+#     [-1, 1.5, 9],
+#     [-1, 5, 30],
+#     [-1, 1, 12,],
+#     [2, 4, 0,],
 
-]
+# ]
+num_rows = int(input("Enter the number of rows: "))
+num_cols = int(input("Enter the number of columns: "))
+
+
+matrix = []
+firstRow = []
+firstCol = []
+print("Enter the first row:")
+for i in range(num_cols):
+    firstRow.append((input()))
+print("Enter the first col:")
+for i in range(num_rows):
+    firstCol.append((input()))
+
+for i in range(num_rows):
+    a = []
+    for j in range(num_cols):
+        a.append(float(input()))
+    matrix.append(a)
+
+
 algorithm1(matrix)
 algorithm2(matrix)
 printMatrix(matrix)
