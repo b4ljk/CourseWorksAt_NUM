@@ -74,14 +74,16 @@ def findPositiveViaRow(matrix=[[]], rowidx=None):
     return result
 
 
-def minimumSimplex(col, matrix=[[]], algorithm=1):
+def minimumSimplex(col, matrix=[[]], algorithm=1, constantsColumn=None):
     result = []
     column_elements = []
+    if constantsColumn == None:
+        constantsColumn = len(matrix[0]) - 1
     for matind, x in enumerate(matrix):
         column_elements.append(x[col])
         if matind == len(matrix) - 1:
             continue
-        constantval = x[len(x) - 1]
+        constantval = x[constantsColumn]
         divider = x[col]
         if divider == 0:
             continue
@@ -117,7 +119,7 @@ def algorithm1(matrix=[[]]):
             print("No solution")
             return
         minimum_simplex = minimumSimplex(
-            negative_element_in_row, matrix, algorithm=1)
+            negative_element_in_row, matrix, 1)
         Jordan(minimum_simplex, negative_element_in_row, matrix)
         printMatrix(matrix)
 
@@ -143,7 +145,7 @@ def algorithm2(matrix=[[]]):
                 return
 
             minimum_simplex = minimumSimplex(
-                positive_elment_index, matrix, algorithm=2)
+                positive_elment_index, matrix, 2)
             if minimum_simplex == -1:
                 continue
 
