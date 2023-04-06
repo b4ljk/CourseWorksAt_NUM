@@ -113,7 +113,7 @@ def minimumSimplex(col, matrix=[[]], algorithm=1, constantsColumn=None, rows_to_
         if divider == 0:
             continue
         val = constantval / divider
-        if val in simplexDictionary:
+        if val in simplexDictionary and val > 0:
             rows_to_ignore.append(matind)
             rows_to_ignore.append(simplexDictionary[val])
             rowsAdded = True
@@ -228,6 +228,13 @@ def algorithm2(matrix=[[]], firstCol=[], firstRow=[]):
 #     [2, 4, 0,],
 
 # ]
+isMax = input("Is maximize? (y/n): ")
+isMax = isMax.lower()
+if isMax == "y":
+    isMax = True
+else:
+    isMax = False
+
 num_rows = int(input("Enter the number of rows: "))
 num_cols = int(input("Enter the number of columns: "))
 
@@ -248,6 +255,12 @@ for i in range(num_rows):
         a.append(float(input()))
     matrix.append(a)
 
+if isMax:
+    for idx, x in enumerate(matrix[len(matrix)-1]):
+        x = x*-1
+        matrix[len(matrix)-1][idx] = x
+        print(x, "x")
+
 
 algorithm1(matrix, firstCol, firstRow)
 algorithm2(matrix, firstCol, firstRow)
@@ -255,4 +268,10 @@ printMatrix(matrix, firstCol, firstRow)
 print("Result")
 matrixRows = len(matrix)
 matrixCols = len(matrix[0])
-print(-matrix[matrixRows-1][matrixCols - 1])
+
+if isMax:
+    print("Maximize: ", end="")
+    print(-matrix[matrixRows-1][matrixCols - 1])
+else:
+    print("Minimize: ", end="")
+    print(matrix[matrixRows-1][matrixCols - 1])
