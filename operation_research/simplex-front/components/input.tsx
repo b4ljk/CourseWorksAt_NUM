@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 
 function MatrixInput(): JSX.Element {
@@ -95,6 +96,15 @@ function MatrixInput(): JSX.Element {
 		return <div style={{ display: "flex", flexDirection: "row" }}>{rows}</div>;
 	};
 
+	const calculate = async () => {
+		const result = await axios.post("http://0.0.0.0:7965/body", {
+			matrix: matrix,
+			primary: primary,
+			second: second,
+		});
+		console.log(result.data);
+	};
+
 	return (
 		<div>
 			<p>Enter matrix values:</p>
@@ -109,6 +119,7 @@ function MatrixInput(): JSX.Element {
 			<p>The full matrix: {JSON.stringify(matrix)}</p>
 			<p>Primary is : {JSON.stringify(primary)}</p>
 			<p>Second is : {JSON.stringify(second)}</p>
+			<button onClick={calculate}>Calculate</button>
 		</div>
 	);
 }
