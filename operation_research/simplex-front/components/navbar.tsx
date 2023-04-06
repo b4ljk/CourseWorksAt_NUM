@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, PropsWithChildren } from "react";
 import { createStyles, Navbar, Group, Code, getStylesRef, rem } from "@mantine/core";
 
 // import { MantineLogo } from '@mantine/ds';
@@ -56,7 +56,7 @@ const useStyles = createStyles((theme) => ({
 
 const data = [{ link: "", label: "Notifications" }];
 
-export function NavbarSimple() {
+export function NavbarSimple({ children }: PropsWithChildren): JSX.Element {
 	const { classes, cx } = useStyles();
 	const [active, setActive] = useState("Billing");
 
