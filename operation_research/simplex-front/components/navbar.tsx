@@ -54,7 +54,7 @@ const useStyles = createStyles((theme) => ({
 	},
 }));
 
-const data = [{ link: "", label: "Notifications" }];
+const data = [{ link: "", label: "calc" }];
 
 export function NavbarSimple({ children }: PropsWithChildren): JSX.Element {
 	const { classes, cx } = useStyles();
@@ -76,7 +76,7 @@ export function NavbarSimple({ children }: PropsWithChildren): JSX.Element {
 	));
 
 	return (
-		<Navbar width={{ sm: 220 }} p="md">
+		<Navbar width={{ sm: 120 }} p="md">
 			<Navbar.Section grow>
 				<Group className={classes.header} position="apart">
 					<Code sx={{ fontWeight: 700 }}>SIMPLEX CALC</Code>

@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Header, Request
 from fastapi.middleware.cors import CORSMiddleware
-
+from calculator import Calculate
 app = FastAPI()
 
 
@@ -19,9 +19,17 @@ app.add_middleware(
 async def root():
     return {"message": "Hello World ayooo broooo "}
 
+class Body:
+    def __init__(self, **kwargs):
+        self.matrix = kwargs.get("matrix")
+        self.primary = kwargs.get("primary")
+        self.second = kwargs.get("second")
+
+        
 
 @app.post("/body/")
 async def create_item(request: Request):
-    body = await request.json()
-    return {"request_body": body}
-# uvicorn back:app --reload --host 0.0.0.0 --port 7965
+    reqData = await request.json()
+    body = Body(**reqData)
+    return_value = Calculate(False, body.matrix,body.primary, body.second)
+    return {"request_body": return_value}

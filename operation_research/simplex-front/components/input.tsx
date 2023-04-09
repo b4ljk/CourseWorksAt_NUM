@@ -7,7 +7,8 @@ function MatrixInput(): JSX.Element {
 	const [second, setSecond] = useState<string[]>([]);
 	const [numRows, setNumRows] = useState<number>(3);
 	const [numCols, setNumCols] = useState<number>(3);
-
+	const [isMaximization, setIsMaximization] = useState<boolean>(true);
+	const [result, setResult] = useState<string>("");
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>, row: number, col: number) => {
 		const value = parseFloat(event.target.value);
 		const newMatrix = matrix.slice();
@@ -76,7 +77,7 @@ function MatrixInput(): JSX.Element {
 			}
 			rows.push(<div key={i}>{cols}</div>);
 		}
-		return <div>{rows}</div>;
+		return <div style={{ overflow: "auto" }}>{rows}</div>;
 	};
 
 	const renderColumn = (): JSX.Element => {
@@ -84,7 +85,7 @@ function MatrixInput(): JSX.Element {
 		for (let j = 0; j < numRows; j++) {
 			cols.push(<input type="text" onChange={(event) => handleStringChange(event, j, primary, setPrimary)} />);
 		}
-		return <div style={{ display: "flex", flexDirection: "column" }}>{cols}</div>;
+		return <div style={{ display: "flex", flexDirection: "column", overflow: "auto" }}>{cols}</div>;
 	};
 
 	const renderRow = (): JSX.Element => {
@@ -92,22 +93,24 @@ function MatrixInput(): JSX.Element {
 		for (let i = 0; i < numCols; i++) {
 			rows.push(<input type="text" onChange={(event) => handleStringChange(event, i, second, setSecond)} />);
 		}
-		rows.unshift(<input readOnly value={"UNDSN/SUL"} />);
-		return <div style={{ display: "flex", flexDirection: "row" }}>{rows}</div>;
+		rows.unshift(<input readOnly value={isMaximization ? "MAXIMUM" : "MINIMUM"} />);
+		return <div style={{ display: "flex", flexDirection: "row", overflow: "auto" }}>{rows}</div>;
 	};
 
 	const calculate = async () => {
-		const result = await axios.post("http://0.0.0.0:7965/body", {
+		const result = await axios.post("http://0.0.0.0:8000/body", {
 			matrix: matrix,
 			primary: primary,
 			second: second,
 		});
-		console.log(result.data);
+		console.log(result.data?.["request_body"]);
+		setResult(result.data?.["request_body"]);
 	};
 
 	return (
 		<div>
-			<p>Enter matrix values:</p>
+			<span>Maximumchlal -&gt; </span>
+			<input type="checkbox" checked={isMaximization} onChange={() => setIsMaximization(!isMaximization)} />
 
 			{renderRow()}
 			<div style={{ display: "flex" }}>
@@ -120,6 +123,7 @@ function MatrixInput(): JSX.Element {
 			<p>Primary is : {JSON.stringify(primary)}</p>
 			<p>Second is : {JSON.stringify(second)}</p>
 			<button onClick={calculate}>Calculate</button>
+			<p>Result is : {result}</p>
 		</div>
 	);
 }
