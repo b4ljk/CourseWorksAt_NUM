@@ -37,4 +37,22 @@ for i in range(len(cols)):
             result[i].append(temp)
             cols[i] -= temp
             rows[j] -= temp
-print(result)
+            #! edge case mur baga zerg shiljih
+            if cols[i] == 0 and rows[j] == 0:
+                result[i].append(0)
+
+for i in range(len(cols)):
+    result[i] = result[i][:len(rows)]
+
+
+for i in range(len(result)):
+    for j in range(len(result[i])):
+        print(result[i][j], end="\t")
+    print()
+Z = 0
+for i in range(len(result)):
+    for j in range(len(result[i])):
+        if result[i][j] == -1:
+            continue
+        Z += result[i][j] * matrix[i][j]
+print("Z = ", Z)
