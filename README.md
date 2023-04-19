@@ -7,6 +7,8 @@
 3. [Mobile Programming](https://github.com/b4ljk/AndroidStudioProjects)
 4. [Object oriented programming](https://github.com/b4ljk/Lecture_at_NUM/tree/main/oop)
 5. [Computer Graphics](https://github.com/b4ljk/Lecture_at_NUM/tree/main/CG)
+6. [Operation Research](https://github.com/b4ljk/Lecture_at_NUM/tree/main/operation_research)
+7. [Operation system theories](https://github.com/b4ljk/Lecture_at_NUM/tree/main/osprogramming)
 
 ## You can also contribute to this repository
 
