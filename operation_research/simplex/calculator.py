@@ -267,6 +267,7 @@ def Calculate(isMax, matrix, firstCol, firstRow):
 
 
     algorithm1(matrix, firstCol, firstRow)
+    print(matrix)
     algorithm2(matrix, firstCol, firstRow)
     printMatrix(matrix, firstCol, firstRow)
     print("Result")
@@ -281,3 +282,4 @@ def Calculate(isMax, matrix, firstCol, firstRow):
         print("Minimize: ", end="")
         print(matrix[matrixRows-1][matrixCols - 1])
         return matrix[matrixRows-1][matrixCols - 1]
+

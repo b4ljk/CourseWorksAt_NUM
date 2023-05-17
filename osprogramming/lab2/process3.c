@@ -24,6 +24,9 @@ void lettersInString(char *str) {
     }
   }
   for (i = 0; i < 26; i++) {
+    if (letters[i] <= 1) {
+      continue;
+    }
     printf("%c: %d\n", 'A' + i, letters[i]);
   }
 }

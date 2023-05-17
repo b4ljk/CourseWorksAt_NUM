@@ -15,6 +15,5 @@ struct PCB {
   int priority;        // Process Priority
   int state;           // Process State
   int process_counter; // Process counter value
-  // Add other fields as necessery
-  int time; // Process time
+  int time;            // Process time
 };

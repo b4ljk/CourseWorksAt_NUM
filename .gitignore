@@ -1,0 +1,7 @@
+#ignore .DS_Store files recursively
+*/.DS_Store
+**/.DS_Store
+**/.vscode/*
+**/.idea/*
+**/.venv/*
+
