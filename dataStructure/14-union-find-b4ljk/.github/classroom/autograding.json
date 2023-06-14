@@ -1,0 +1,74 @@
+{
+  "tests": [
+    {
+      "name": "1 test",
+      "setup": "cp /home/gantulgag/uf_tests/1.out . && gcc main.c uf.c -lm && /usr/bin/timeout -k 15s -s 9 15s ./a.out < /home/gantulgag/uf_tests/1.in > out",
+      "run": "diff -q 1.out out",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "2 test",
+      "setup": "cp /home/gantulgag/uf_tests/2.out . && gcc main.c uf.c -lm && /usr/bin/timeout -k 15s -s 9 15s ./a.out < /home/gantulgag/uf_tests/2.in > out",
+      "run": "diff -q 2.out out",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "3 test",
+      "setup": "cp /home/gantulgag/uf_tests/3.out . && gcc main.c uf.c -lm && /usr/bin/timeout -k 15s -s 9 15s ./a.out < /home/gantulgag/uf_tests/3.in > out",
+      "run": "diff -q 3.out out",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "4 test",
+      "setup": "cp /home/gantulgag/uf_tests/4.out . && gcc main.c uf.c -lm && /usr/bin/timeout -k 15s -s 9 15s ./a.out < /home/gantulgag/uf_tests/4.in > out",
+      "run": "diff -q 4.out out",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "5 test",
+      "setup": "cp /home/gantulgag/uf_tests/5.out . && gcc main.c uf.c -lm && /usr/bin/timeout -k 15s -s 9 15s ./a.out < /home/gantulgag/uf_tests/5.in > out",
+      "run": "diff -q 5.out out",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "6 test",
+      "setup": "cp /home/gantulgag/uf_tests/6.out . && gcc main.c uf.c -lm && /usr/bin/timeout -k 15s -s 9 15s ./a.out < /home/gantulgag/uf_tests/6.in > out",
+      "run": "diff -q 6.out out",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "7 test",
+      "setup": "cp /home/gantulgag/uf_tests/7.out . && gcc main.c uf.c -lm && /usr/bin/timeout -k 15s -s 9 15s ./a.out < /home/gantulgag/uf_tests/7.in > out",
+      "run": "diff -q 7.out out",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 1,
+      "points": 3
+    }
+  ]
+}
