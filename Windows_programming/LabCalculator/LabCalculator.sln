@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33424.131
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalcLib", "CalcLib\CalcLib.csproj", "{4999CC1A-DB05-4CEC-8314-C69A19D08556}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalcWin", "CalcWin\CalcWin.csproj", "{DEECC0E4-108B-455B-8F0B-732C704C5E26}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calculator", "Calculator\Calculator.csproj", "{450A11D0-C73F-4F3A-907A-3CF41F758E26}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4999CC1A-DB05-4CEC-8314-C69A19D08556}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4999CC1A-DB05-4CEC-8314-C69A19D08556}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4999CC1A-DB05-4CEC-8314-C69A19D08556}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4999CC1A-DB05-4CEC-8314-C69A19D08556}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEECC0E4-108B-455B-8F0B-732C704C5E26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEECC0E4-108B-455B-8F0B-732C704C5E26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEECC0E4-108B-455B-8F0B-732C704C5E26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEECC0E4-108B-455B-8F0B-732C704C5E26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{450A11D0-C73F-4F3A-907A-3CF41F758E26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{450A11D0-C73F-4F3A-907A-3CF41F758E26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{450A11D0-C73F-4F3A-907A-3CF41F758E26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{450A11D0-C73F-4F3A-907A-3CF41F758E26}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7CEA55E8-DDD5-4811-AA52-3FB925F96BF2}
+	EndGlobalSection
+EndGlobal

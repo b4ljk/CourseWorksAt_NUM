@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33424.131
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MDI", "MDI\MDI.csproj", "{A150225D-3142-445F-A316-D953E8AB50E8}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "MDISetup", "MDISetup\MDISetup.vdproj", "{234D599E-B9CA-454C-A216-3FB88F18986A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A150225D-3142-445F-A316-D953E8AB50E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A150225D-3142-445F-A316-D953E8AB50E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A150225D-3142-445F-A316-D953E8AB50E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A150225D-3142-445F-A316-D953E8AB50E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{234D599E-B9CA-454C-A216-3FB88F18986A}.Debug|Any CPU.ActiveCfg = Debug
+		{234D599E-B9CA-454C-A216-3FB88F18986A}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {091661F4-8C0B-4E27-8510-4FDB20E0AD85}
+	EndGlobalSection
+EndGlobal
