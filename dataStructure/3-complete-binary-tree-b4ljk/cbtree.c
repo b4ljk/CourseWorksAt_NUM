@@ -1,13 +1,13 @@
 #include "DS.h"
-#include <math.h>
+
 /*
   p-ийн зааж буй CBTree-д x утгыг оруулна
 */
 void cb_push(CBTree *p, int x)
 {
+      p->tree.a[p->tree.len] = x;
+    p->tree.len = p->tree.len + 1;
         /* Энд оруулах үйлдлийг хийнэ үү */
-        p->tree.a[p->tree.len] = x;
-        p->tree.len++;
 }
 
 /*
@@ -16,15 +16,16 @@ void cb_push(CBTree *p, int x)
 */
 int cb_left(const CBTree *p, int idx)
 {
+if (idx * 2 + 1 > p->tree.len)
+{
+        return idx * 2 + 1;
+}
+  else
+    return -1;
+     
+
+
         /* Энд зүүн хүүхдийн индексийг буцаах үйлдлийг хийнэ үү */
-        if (idx * 2 + 1 < p->tree.len)
-        {
-                return idx * 2 + 1;
-        }
-        else
-        {
-                return -1;
-        }
 }
 
 /*
@@ -34,14 +35,12 @@ int cb_left(const CBTree *p, int idx)
 int cb_right(const CBTree *p, int idx)
 {
         /* Энд баруун хүүхдийн индексийг буцаах үйлдлийг хийнэ үү */
-        if (idx * 2 + 2 < p->tree.len)
+        if (idx * 2 + 2 > p->tree.len)
         {
-                return idx * 2 + 2;
-        }
-        else
-        {
-                return -1;
-        }
+        return idx * 2 + 2;
+}
+  else
+    return -1;
 }
 
 /*
@@ -51,16 +50,13 @@ int cb_right(const CBTree *p, int idx)
 */
 int cb_search(const CBTree *p, int x)
 {
-        /* Энд хайх үйлдлийг хийнэ */
-        int i;
-        for (i = 0; i < p->tree.len; i++)
-        {
-                if (p->tree.a[i] == x)
-                {
-                        return i;
-                }
+        for(int i=0; i < p->tree.len; i++){
+          if(p->tree.a[i] == x){
+                return i;
+          }
         }
         return -1;
+        /* Энд хайх үйлдлийг хийнэ */	
 }
 
 /*
@@ -70,26 +66,31 @@ int cb_search(const CBTree *p, int x)
 */
 void cb_ancestors(const CBTree *p, int idx)
 {
+        if(idx==0){
+                return ;
+        }
+        
+        for(int i = idx; i > 0 ; i = (i-2) /2){
+                printf("%d\n",p->tree.a[(i-1)]/2);
+        }
         /* Энд өвөг эцгийг олох үйлдлийг хийнэ үү */
-        if (idx == 0)
-        {
-                return;
-        }
-
-        int i;
-        for (i = idx; i > 0; i = (i - 1) / 2)
-        {
-                printf("%d\n", p->tree.a[(i - 1) / 2]);
-        }
 }
 
 /*
   p-ийн зааж буй CBTree-ийн өндрийг буцаана
 */
 int cb_height(const CBTree *p)
-{
+{ 
+        int i = p->tree.len;
+        int a = 1;
+        while(i>0){
+                  i = (i-1)/2;
+                  a++;
+                
+        }
+        return a;
+       
         /* Энд өндрийг олох үйлдлийг хийнэ */
-        return ceil(log2(p->tree.len + 1));
 }
 
 /*
@@ -98,29 +99,25 @@ int cb_height(const CBTree *p)
   Ах, дүү нь байхгүй бол -1-г буцаана.
 */
 int cb_sibling(const CBTree *p, int idx)
-{
-        /* Энд ах, дүүг олох үйлдлийг хийнэ үү */
-        if (idx == 0)
-        {
+{       
+        if(idx == 0){
                 return -1;
         }
-        int parent = (idx - 1) / 2;
-        if (parent * 2 + 1 == idx)
-        {
-                if (parent * 2 + 2 < p->tree.len)
-                {
-                        return parent * 2 + 2;
-                }
-                else
-                {
-                        return -1;
-                }
-        }
-        else
-        {
-                return parent * 2 + 1;
-        }
+    int par = (idx-1) /2;
+    if (par * 2 + 1== idx){
+        if (par * 2 + 2 <p->tree.len){
+                return par * 2 + 2;
 }
+        else{
+        return  -1;
+}}
+       else {
+        return par*2+1;
+}
+    }
+
+        /* Энд ах, дүүг олох үйлдлийг хийнэ үү */
+
 
 /*
   p-ийн зааж буй CBTree-г idx дугаартай зангилаанаас эхлэн preorder-оор хэвлэ.
@@ -129,11 +126,11 @@ int cb_sibling(const CBTree *p, int idx)
 void cb_preorder(const CBTree *p, int idx)
 {
         /* Энд pre-order-оор хэвлэх үйлдлийг хийнэ үү */
-        if (idx < p->tree.len)
+        if(idx < p->tree.len)
         {
                 printf("%d\n", p->tree.a[idx]);
-                cb_preorder(p, idx * 2 + 1);
-                cb_preorder(p, idx * 2 + 2);
+                cb_preorder( p , idx * 2 + 2);
+                cb_preorder(p , idx* 2 + 1);
         }
 }
 
@@ -144,10 +141,10 @@ void cb_preorder(const CBTree *p, int idx)
 void cb_inorder(const CBTree *p, int idx)
 {
         /* Энд in-order-оор хэвлэх үйлдлийг хийнэ үү */
-        if (idx < p->tree.len)
+        if(idx < p->tree.len)
         {
-                cb_inorder(p, idx * 2 + 1);
-                printf("%d\n", p->tree.a[idx]);
+                cb_inorder(p,idx * 2 + 1);
+                printf("%d\n",p->tree.a[idx]);
                 cb_inorder(p, idx * 2 + 2);
         }
 }
@@ -159,11 +156,10 @@ void cb_inorder(const CBTree *p, int idx)
 void cb_postorder(const CBTree *p, int idx)
 {
         /* Энд post-order-оор хэвлэх үйлдлийг хийнэ үү */
-        if (idx < p->tree.len)
-        {
-                cb_postorder(p, idx * 2 + 1);
-                cb_postorder(p, idx * 2 + 2);
-                printf("%d\n", p->tree.a[idx]);
+        if(idx < p->tree.len){
+                cb_postorder(p,idx + 2 + 1);
+                cb_postorder(p,idx + 2 + 2);
+                printf("%d\n",p->tree.a[idx]);
         }
 }
 
@@ -175,15 +171,14 @@ void cb_postorder(const CBTree *p, int idx)
 void cb_leaves(const CBTree *p, int idx)
 {
         /* Энд навчуудыг үйлдлийг хийнэ үү */
-        if (idx < p->tree.len)
-        {
-                if (idx * 2 + 1 >= p->tree.len)
-                {
-                        printf("%d\n", p->tree.a[idx]);
+        if(idx<p->tree.len){
+                if(idx>=p->tree.len){
+                        printf("%d",p->tree.a[idx]);
                 }
-                cb_leaves(p, idx * 2 + 1);
-                cb_leaves(p, idx * 2 + 2);
+                cb_leaves(p,idx + 1);
+                cb_leaves(p,idx + 2);
         }
+
 }
 
 /*
@@ -231,9 +226,10 @@ int cb_level(const CBTree *p, int x)
         {
                 if (p->tree.a[i] == x)
                 {
-                        // printf("%f\n", ceil(log2(i + 2)) - 1);
-                        return (int)ceil(log2(i + 2)) - 1;
+                         printf("%f\n", ceil(log2(i + 2)) - 1);
+                       
                 }
         }
         return -1;
 }
+
