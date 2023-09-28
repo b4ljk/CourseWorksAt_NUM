@@ -1,0 +1,10 @@
+\contentsline {part}{УДИРТГАЛ}{1}{chapter*.1}%
+\contentsline {chapter}{\numberline {1.}\uppercase {Дүрстэй танилцах}}{2}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Зурагны хэмжээ боловсруулах}{2}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Дундаж зураг тооцоолох}{2}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Зургийн ялгааг олох}{4}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Нэмэлт мэдээлэл}{4}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Кодны тайлбар}{4}{section.1.5}%
+\contentsline {section}{\numberline {1.6}Дүгнэлт}{5}{section.1.6}%
+\contentsline {part}{ХАВСРАЛТ}{6}{section.1.6}%
+\contentsline {chapter}{\numberline {A.}\uppercase {Жишээ зурагнууд}}{6}{appendix.A}%
