@@ -1,0 +1,207 @@
+\chapter{Дүрс боловсруулах /Эхний хэсэг/}
+\section{Spatial and Intensity Resolution}
+
+Spatial нь зураг бүтээхэд ашигласан пикселийн тоог илэрхийлдэг. Орон зайн өндөр нарийвчлалтай зургууд нь илүү их мэдээллийг агуулдаг. Intensity Resolution нь зургийн пиксел бүрийг илэрхийлэхэд ашигласан саарал түвшний тоог илэрхийлдэг. Энэ тоо нь ихсэх тусам илүү нарийвчлалтай хар цагаан зураг байна.
+
+Би python дээр list-д хадгалсан зургийн пиксел бүрийг яг өөр дээр нь шууд хувиргалт хийж явсан. Үүний үр дүнд хоёрийн 1-ээс 8 зэрэг хүртэл тооноос нэгийг хасч хязгаар болгон авч энэхүү муждаа зургийн бит-г багтаасан. Үүний үр дүнд 8,7,6...2 бит-н зураг үүссэн.
+
+\begin{lstlisting}[language=Python, caption=Spatial and Intensity Resolution, frame=single]
+current_directory = os.getcwd()
+
+image = cv2.imread("skull.tif", -1)
+
+for x in range(1, 9):
+		divider = 2**x - 1
+		print(x)
+		current_image = image.copy()
+		for idx_i, i in enumerate(current_image):
+				for idx_j, z in enumerate(i):
+						current_image[idx_i][idx_j] = round(z / divider) * divider
+
+		cv2.imwrite(f"{current_directory}/result/skull_{divider}.tif", current_image)
+\end{lstlisting}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.3]{src/img/lab2/skull.png}
+	\caption{Spatial and Intensity Resolution Зураг}
+\end{figure}
+	
+\pagebreak
+
+\section{Image interpolation}
+
+Зургийн интерполяци нь зургийн нийт пикселийн тоог нэмэгдүүлэх, багасгахад ашигладаг арга юм. Энэ нь илүү өндөр нарийвчлалтай, хамгийн сайн байдлаар зурагт гарах пикселийн утгыг тооцоолдог. Хамгийн ойрын хөрш, хоёр шугаман, бикуб зэрэг дүрсийг интерполяци хийх хэд хэдэн арга байдаг.
+Бас заримдаа нүдэнд нягтрал сайтай харагддаг ч яг үнэндээ тооцоолох хийхэд муу утгууд байдаг ийм учраас ялгааг харуулсан зургийг хавсаргалаа.
+\subsection{openCV}
+Python хэлний OpenCV сан нь Inter Nearest, Linear, Cubic гэх мэт interplotation хийх боломж бүхий бэлэн функцуудтай ба, энэхүү функцуудыг ашиглан зурагтай ажиллах боломжтой. \cite{opencv}
+
+\begin{lstlisting}[language=Python, caption=Image interpolation, frame=single]
+image = cv2.imread("rose.tif", -1)
+
+interplotation = {
+		"nearest": cv2.INTER_NEAREST,
+		# cv2.IMREAD_UNCHANGED,
+		"linear": cv2.INTER_LINEAR,
+		"cubic": cv2.INTER_CUBIC,
+}
+
+sizes = [128, 64, 32]
+print(image.shape)
+for key, _intr in interplotation.items():
+		for size in sizes:
+				current_image = cv2.resize(image, (size, size), interpolation=_intr)
+				current_image = cv2.resize(current_image, (1024, 1024), interpolation=_intr)
+				cv2.imwrite(
+						f"{current_directory}/result/rose_{_intr}_{size}_{key}.tif", current_image
+				)
+				difference_image = image - current_image
+				cv2.imwrite(
+						f"{current_directory}/result/rose_{_intr}_{size}_{key}_difference.tif",
+						difference_image,
+				)
+\end{lstlisting}
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.4]{src/img/lab2/rose.png}
+	\caption{Image interpolation Зураг}
+\end{figure}
+
+\subsection{Ялгааг олох}
+
+Зураг хоорондын ялгааг нүдээр харж аль зураг нь эх зураргтайгаа хамгийн төстэйг олж болохоос гадна. Дундаж квадрат алдааны (Mean Square Error) аргыг ашиглан олох боломжтой.\cite{scikit-learn} Үр дүнд хамгийн адил зураг нь хэмжээ бүр дээр linear арга ашигласан зураг гарсан. Яг үнэндээ нүдээр харахад энэ зураг хамгийн муу нь байлаа. Миний муу гэж хэлсэн шалтгаан нь sharpness багатай санагдсан.
+
+\begin{lstlisting}[language=Python, caption=Mean squared error code, frame=single]
+for key, value in sizes_dict.items():
+difference_flat = [img[0].flatten() for img in value]
+errors = [mean_squared_error(original_flat, diff) for diff in difference_flat]
+closest_index = np.argmin(errors)
+print(f"Size: {key}")
+print(value[closest_index][1])
+print(f"Closest index: {closest_index}")
+
+most_different_index = np.argmax(errors)
+print(value[most_different_index][1])
+print(f"Most different index: {most_different_index}")
+	\end{lstlisting}
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.4]{src/img/lab2/rose_difference.png}
+	\caption{Ялгааг харуулсан зураг}
+\end{figure}
+
+\pagebreak
+\section{Contrast Stretching}
+
+Contrast Stretching нь зургийн төрөл нь дүрслэх боломжтой пикселийн эрчмийн бүрэн мужийг бүх (0-255) утгуудын хүрээг хамрахын тулд агуулж буй эрчмийн утгуудын мужийг сунгах замаар зургийн тодролыг сайжруулдаг. 
+
+Contrast Stretching (ихэвчлэн normalization гэж нэрлэдэг) нь дүрсний тодосгогчийг хүссэн утгын хүрээг хамрахын тулд агуулж буй эрчмийн утгын мужийг "сунгах" замаар дүрсийг сайжруулах энгийн арга юм. Энэ нь илүү боловсронгуй гистограмын тэгшитгэлээс ялгаатай нь зөвхөн зургийн пикселийн утгуудад шугаман scaling функцийг ашигладаг. Үүний үр дүнд "сайжруулалт" нь илүү хатуу биш юм.\cite{contrast}
+
+\begin{lstlisting}[language=Python, caption=Contrast Stretching, frame=single]
+if not os.path.exists(f"{current_directory}/result/contrast_stretching"):
+os.makedirs(f"{current_directory}/result/contrast_stretching")
+img = cv2.imread("input/lab3photo.tif")
+gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+min_val, max_val, _, _ = cv2.minMaxLoc(gray)
+scale = (255 - 0) / (max_val - min_val)
+shift = 0 - (scale * min_val)
+stretched = cv2.convertScaleAbs(gray, alpha=scale, beta=shift)
+bit1 = cv2.bitwise_and(stretched, 0x80)
+cat = cv2.hconcat([gray, stretched, bit1])
+cv2.imwrite(f"{current_directory}/result/contrast_stretching/lab3photo.tif", cat)
+\end{lstlisting}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.3]{src/img/lab2/lab3photo.png}
+	\caption{Contrast Stretching}
+\end{figure}
+
+\pagebreak
+\section{Gray-Level Slicing}
+
+Gray-Level Slicing тусламжтайгаар зураг дээрх саарал өнгийн тодорхой мужийг тодруулж, бусдыг нь багасгадаг. Зорилго нь contrast нэмэгдүүлэх эсвэл тодорхой шинж чанаруудыг тодосгох явдал юм.
+
+\begin{lstlisting}[language=Python, caption=Gray-Level Slicing, frame=single]
+	if not os.path.exists(f"{current_directory}/result/gray_level_slicing"):
+	os.makedirs(f"{current_directory}/result/gray_level_slicing")
+
+img = cv2.imread('input/task4.tif')
+images = []
+
+gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+bit2 = cv2.bitwise_and(gray, 0xC0)
+
+gray = cv2.resize(gray, [400, 400])
+bit1 = cv2.resize(gray, [400, 400])
+bit2 = cv2.resize(gray, [400, 400])
+for i in range(bit1.shape[0]):
+	for j in range(bit1.shape[1]):
+			if (bit1[i][j] < 150 and bit1[i][j] > 70):
+					bit1[i][j] = 37
+			else:
+					bit1[i][j] = 230
+
+for i in range(bit2.shape[0]):
+	for j in range(bit2.shape[1]):
+			if (bit2[i][j] < 150 and bit2[i][j] > 70):
+					bit2[i][j] = 70
+			else:
+					bit2[i][j] = 180
+
+images.append(gray)
+images.append(bit1)
+images.append(bit2)
+
+cat = cv2.hconcat(images)
+cv2.imwrite(f"{current_directory}/result/gray_level_slicing/task4.tif", cat)
+\end{lstlisting}
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.38]{src/img/lab2/task4.png}
+	\caption{Gray-Level Slicing}
+\end{figure}
+
+\pagebreak
+
+\section{Bit-plane slicing}
+
+Бит хавтгайн зүсэлт нь зургийг битийн хавтгайд хуваадаг бөгөөд дараа нь зургийн тодорхой шинж чанарыг тодруулах, эсвэл тодорхой битийн хавтгайг хаях замаар зургийг шахах зорилгоор тус тусад нь боловсруулж болно. Зургийн пиксел дэх бит бүрийг хамгийн багааас эхлээд хамгийн чухал бит хүртэл анхны зурагтай ижил хэмжээтэй хоёртын битийн хавтгай гэж үздэг.
+
+\begin{lstlisting}[language=Python, caption=Bit-plane slicing, frame=single]
+	if not os.path.exists(f"{current_directory}/result/bitplaneslicing"):
+	os.makedirs(f"{current_directory}/result/bitplaneslicing")
+
+img = cv2.imread('input/Fig0314(a)(100-dollars).tif')
+img = cv2.resize(img, (380, 250))
+images = []
+
+for i in range(8):
+	j = np.bitwise_and(img, 1 << i)
+	j = np.uint8(j * 255)
+	images.append(j)
+
+row1 = images[:4]
+row2 = images[4:]
+
+row1_cat = cv2.hconcat(row1)
+row2_cat = cv2.hconcat(row2)
+
+final_image = cv2.vconcat([row1_cat, row2_cat])
+cv2.imwrite(f"{current_directory}/result/bitplaneslicing/task5.tif", final_image)
+\end{lstlisting}
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.65]{src/img/lab2/task5.png}
+	\caption{Bit-plane slicing}
+\end{figure}
+
+\section{Дүгнэлт}
+Энэ тайланд дүрсийг 5 аргаар боловсруулах талаар судаллаа. Арга бүхэн нь өөрийн гэсэн давуу ба сул талтай.
+Spatial and Intensity Resolution нь дүрсийг depth буюу гүнийг тодорхойлоход ашиглагддаг.
+Image interpolation нь зургийн нарийвчлал сайжруулах аль эсвэл compress хийхэд ашиглаж болдог.
+Contrast stretching нь зургийн pixel бүрийн утгын 0-255 ойртуулж хамрах хүрээг ихэсгэснээр тодосгодог.
+Гэх мэтчилэн маш олон хэрэглээтэй.

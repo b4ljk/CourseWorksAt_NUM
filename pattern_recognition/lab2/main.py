@@ -4,6 +4,7 @@ import typing as t
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
+from sklearn.metrics import mean_squared_error
 
 current_directory = os.getcwd()
 
@@ -51,8 +52,10 @@ interplotation = {
     "linear": cv2.INTER_LINEAR,
     "cubic": cv2.INTER_CUBIC,
 }
+original_flat = image.flatten()
 
 sizes = [128, 64, 32]
+sizes_dict = {key: [] for key in sizes}
 print(image.shape)
 for key, _intr in interplotation.items():
     for size in sizes:
@@ -63,38 +66,50 @@ for key, _intr in interplotation.items():
         difference_image = image - current_image
 
         images_list_difference.append(difference_image)
+        sizes_dict[size].append([current_image, "method: " + key])
 
-# Create subplots
+
+for key, value in sizes_dict.items():
+    difference_flat = [img[0].flatten() for img in value]
+    errors = [mean_squared_error(original_flat, diff) for diff in difference_flat]
+    closest_index = np.argmin(errors)
+    print(f"Size: {key}")
+    print(value[closest_index][1])
+    print(f"Closest index: {closest_index}")
+
+    most_different_index = np.argmax(errors)
+    print(value[most_different_index][1])
+    print(f"Most different index: {most_different_index}")
+
+
 fig, axs = plt.subplots(len(interplotation), len(sizes), figsize=(15, 15))
 
-# Iterate over images and add them to subplots
 for i, img in enumerate(images_list):
     ax = axs[i // len(sizes)][i % len(sizes)]
     ax.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
     ax.set_title(
         f"Method: {list(interplotation.keys())[i//len(sizes)]}, Size: {sizes[i%len(sizes)]}",
         fontsize=20,
-    )  # Increase font size here
+    )
     ax.axis("off")
 
 plt.tight_layout()
 plt.savefig(f"{current_directory}/result/rose.png")
 
-# Repeat the same for images_list_difference
 fig, axs = plt.subplots(len(interplotation), len(sizes), figsize=(15, 15))
 
-# Iterate over images and add them to subplots
 for i, img in enumerate(images_list_difference):
     ax = axs[i // len(sizes)][i % len(sizes)]
     ax.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
     ax.set_title(
         f"Method: {list(interplotation.keys())[i//len(sizes)]}, Size: {sizes[i%len(sizes)]}",
         fontsize=20,
-    )  # Increase font size here
+    )
     ax.axis("off")
 
 plt.tight_layout()
 plt.savefig(f"{current_directory}/result/rose_difference.png")
+
 
 # TASK 3 CONTRAST STRETCHING
 # create folder if it does not exists path: result/contrast_stretching

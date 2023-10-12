@@ -1,10 +1,10 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.8.20)  21 SEP 2023 21:36
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.8.20)  29 SEP 2023 20:57
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/home/baljin/coding/tailan/internship-report/main.tex
-(/home/baljin/coding/tailan/internship-report/main.tex
+**/home/baljin/coding/Lecture_at_NUM/pattern_recognition/report/main.tex
+(/home/baljin/coding/Lecture_at_NUM/pattern_recognition/report/main.tex
 LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2023-08-11>
 (/usr/local/texlive/2023/texmf-dist/tex/latex/base/report.cls
@@ -586,14 +586,33 @@ Package nomencl Info: Writing nomenclature file main.nlo on input line 112.
 LaTeX Warning: Unused global option(s):
     [A4].
 
-(./main.aux (./src/main-pre.aux) (./src/abstract.aux)
+(./main.aux (./src/main-pre.aux) (./src/abstract.aux) (./src/chapters/chapter1.aux
 
 LaTeX Warning: Label `DescriptiveLabel' multiply defined.
 
 
 LaTeX Warning: Label `DescriptiveLabel' multiply defined.
 
-(./src/appendix.aux))
+) (./src/chapters/chapter2.aux
+
+LaTeX Warning: Label `DescriptiveLabel' multiply defined.
+
+
+LaTeX Warning: Label `DescriptiveLabel' multiply defined.
+
+
+LaTeX Warning: Label `DescriptiveLabel' multiply defined.
+
+
+LaTeX Warning: Label `DescriptiveLabel' multiply defined.
+
+
+LaTeX Warning: Label `DescriptiveLabel' multiply defined.
+
+
+LaTeX Warning: Label `DescriptiveLabel' multiply defined.
+
+) (./src/appendix.aux))
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 113.
@@ -886,6 +905,9 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 
 ]) (./src/body.tex
+\openout2 = `src/chapters/chapter1.aux'.
+
+ (./src/chapters/chapter1.tex
 \uppercase {Бүлэг}1.
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
@@ -899,6 +921,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 1--2
 
 Overfull \hbox (19.29314pt too wide) in paragraph at lines 3--4
 \TU/TimesNewRoman(0)/m/n/12 явдал юм. Энэ нь өөр өөр зургуудыг харьцуулах боломжийг олгох тул, маш чухал юм. Хэмжээний
+ []
+
+
+Overfull \hbox (2.08089pt too wide) in paragraph at lines 3--4
+\TU/TimesNewRoman(0)/m/n/12 аливаа ялгаа нь алдаатай үр дүн эсвэл буруу үр дүнд хүргэх, эсвэл бүр дундаж утгыг тооцоолох
  []
 
 (/usr/local/texlive/2023/texmf-dist/tex/latex/listings/lstlang1.sty
@@ -916,6 +943,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
 [2
+
 
 
 
@@ -954,7 +982,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.53363pt}.
 
-[4]
+[4])
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.53363pt, for example:
@@ -963,6 +991,187 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-2.53363pt}.
 
 [5]
+\openout2 = `src/chapters/chapter2.aux'.
+
+ (./src/chapters/chapter2.tex
+\uppercase {Бүлэг}2.
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\uppercase' on input line 1.
+
+
+Overfull \hbox (35.07217pt too wide) in paragraph at lines 1--2
+\TU/TimesNewRoman(0)/b/n/24.88 2. ДҮРС БОЛОВСРУУЛАХ /ЭХНИЙ ХЭСЭГ/ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--2
+
+ []
+
+
+Overfull \hbox (39.24677pt too wide) in paragraph at lines 4--5
+[]\TU/TimesNewRoman(0)/m/n/12 Spatial нь зураг бүтээхэд ашигласан пикселийн тоог илэрхийлдэг. Орон зайн өндөр нарийвчлалтай
+ []
+
+
+Overfull \hbox (32.48114pt too wide) in paragraph at lines 4--5
+\TU/TimesNewRoman(0)/m/n/12 зургууд нь илүү их мэдээллийг агуулдаг. Intensity Resolution нь зургийн пиксел бүрийг илэрхийлэхэд
+ []
+
+File: src/img/lab2/skull.png Graphic file (type bmp)
+<src/img/lab2/skull.png>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[6
+
+
+
+
+]
+LaTeX Font Info:    Font shape `TU/TimesNewRoman(0)/b/sl' in size <12> not available
+(Font)              Font shape `TU/TimesNewRoman(0)/b/it' tried instead on input line 36.
+
+Overfull \hbox (1.80139pt too wide) in paragraph at lines 37--38
+[]\TU/TimesNewRoman(0)/m/n/12 Python хэлний OpenCV сан нь Inter Nearest, Linear, Cubic гэх мэт interplotation хийх боломж
+ []
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.53363pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.53363pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.53363pt}.
+
+[7]
+File: src/img/lab2/rose.png Graphic file (type bmp)
+<src/img/lab2/rose.png>
+
+Overfull \hbox (15.41083pt too wide) in paragraph at lines 73--74
+\TU/TimesNewRoman(0)/m/n/12 болохоос гадна. Дундаж квадрат алдааны (Mean Square Error) аргыг ашиглан олох боломжтой.[[]]
+ []
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.53363pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.53363pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.53363pt}.
+
+[8]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.53363pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.53363pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.53363pt}.
+
+[9]
+File: src/img/lab2/rose_difference.png Graphic file (type bmp)
+<src/img/lab2/rose_difference.png>
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.53363pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.53363pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.53363pt}.
+
+[10]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.53363pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.53363pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.53363pt}.
+
+[11]
+File: src/img/lab2/lab3photo.png Graphic file (type bmp)
+<src/img/lab2/lab3photo.png>
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.53363pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.53363pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.53363pt}.
+
+[12]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.53363pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.53363pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.53363pt}.
+
+[13]
+File: src/img/lab2/task4.png Graphic file (type bmp)
+<src/img/lab2/task4.png>
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.53363pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.53363pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.53363pt}.
+
+[14]
+Overfull \hbox (5.09181pt too wide) in paragraph at lines 172--173
+[]\TU/TimesNewRoman(0)/m/n/12 Бит хавтгайн зүсэлт нь зургийг битийн хавтгайд хуваадаг бөгөөд дараа нь зургийн тодорхой
+ []
+
+
+Overfull \hbox (10.92659pt too wide) in paragraph at lines 172--173
+\TU/TimesNewRoman(0)/m/n/12 шинж чанарыг тодруулах, эсвэл тодорхой битийн хавтгайг хаях замаар зургийг шахах зорилгоор
+ []
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.53363pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.53363pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.53363pt}.
+
+[15]
+File: src/img/lab2/task5.png Graphic file (type bmp)
+<src/img/lab2/task5.png>
+)
+Overfull \hbox (11.26044pt too wide) in paragraph at lines 203--2
+\TU/TimesNewRoman(0)/m/n/12 давуу ба сул талтай. Spatial and Intensity Resolution нь дүрсийг depth буюу гүнийг тодорхойлоход
+ []
+
+
+Overfull \hbox (2.53583pt too wide) in paragraph at lines 203--2
+\TU/TimesNewRoman(0)/m/n/12 ашиглагддаг. Image interpolation нь зургийн нарийвчлал сайжруулах аль эсвэл compress хийхэд
+ []
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.53363pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.53363pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.53363pt}.
+
+[16]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.53363pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.53363pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.53363pt}.
+
+[17]
 \openout2 = `src/appendix.aux'.
 
  (./src/appendix.tex
@@ -983,7 +1192,9 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[6
+[18
+
+
 
 
 ]
@@ -994,7 +1205,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[7]) (./src/bibliography.tex)
+[19]) (./src/bibliography.tex
+Underfull \hbox (badness 10000) in paragraph at lines 6--7
+[]\TU/TimesNewRoman(0)/m/n/12 OpenCV, (2023). Documentation. Opencv []$[][][][][] [] [] [] [][][][] [] [][][][][][] [] [][][] [] [] [] [] [] [][] [] [][][] []
+ []
+
+)
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -1002,11 +1218,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[8
+[20
 
 
 
-] (./main.aux (./src/main-pre.aux) (./src/abstract.aux) (./src/appendix.aux))
+] (./main.aux (./src/main-pre.aux) (./src/abstract.aux) (./src/chapters/chapter1.aux) (./src/chapters/chapter2.aux) (./src/appendix.aux))
  ***********
 LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2023-08-11>
@@ -1016,15 +1232,15 @@ L3 programming layer <2023-08-11>
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 657A8F067A947B6E7AF5027C8111D09A;1724.
+(rerunfilecheck)             Checksum: BB973D7FEA0C67439E916028BC476C08;2952.
  ) 
 Here is how much of TeX's memory you used:
- 22378 strings out of 475846
- 409103 string characters out of 5777862
+ 22557 strings out of 475846
+ 413443 string characters out of 5777862
  2043885 words of memory out of 5000000
- 43086 multiletter control sequences out of 15000+600000
- 564411 words of font info for 99 fonts, out of 8000000 for 9000
+ 43239 multiletter control sequences out of 15000+600000
+ 564419 words of font info for 100 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 110i,13n,117p,532b,2075s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 110i,13n,117p,581b,2089s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.xdv (12 pages, 125808 bytes).
+Output written on main.xdv (24 pages, 360072 bytes).
