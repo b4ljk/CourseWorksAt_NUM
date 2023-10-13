@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.8.17)  13 OCT 2023 09:21
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.8.17)  13 OCT 2023 11:54
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1186,6 +1186,27 @@ Underfull \hbox (badness 10000) in paragraph at lines 1--2
 
  []
 
+
+Overfull \hbox (0.44417pt too wide) in paragraph at lines 10--16
+\TU/TimesNewRoman(0)/m/n/12 гулсуулах (Brightness modification), гистограмм тэгшитгэх (Histogram equalization) зэрэг орно.
+ []
+
+File: src/img/dasgal6.png Graphic file (type bmp)
+<src/img/dasgal6.png>
+
+LaTeX Warning: Float too large for page by 53.7795pt on input line 32.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+File: src/img/output.png Graphic file (type bmp)
+<src/img/output.png>
+
+LaTeX Warning: Float too large for page by 53.7795pt on input line 37.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
 )
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1200,6 +1221,22 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 
 ]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[19]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[20]
 \openout2 = `src/appendix.aux'.
 
  (./src/appendix.tex
@@ -1220,7 +1257,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[19
+[21
 
 
 
@@ -1233,7 +1270,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[20]) (./src/bibliography.tex
+[22]) (./src/bibliography.tex
 Underfull \hbox (badness 10000) in paragraph at lines 6--7
 []\TU/TimesNewRoman(0)/m/n/12 OpenCV, (2023). Documentation. Opencv []$[][][][][] [] [] [] [][][][] [] [][][][][][] [] [][][] [] [] [] [] [] [][] [] [][][] []
  []
@@ -1246,7 +1283,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[21
+[23
 
 
 
@@ -1255,15 +1292,15 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 270BA17E7D54A4449DA17F1F74D8483C;3398.
+(rerunfilecheck)             Checksum: 0EB5E9667140043E0C5D080603E0E689;3408.
  ) 
 Here is how much of TeX's memory you used:
- 21975 strings out of 476683
- 410280 string characters out of 5804047
+ 21992 strings out of 476683
+ 410649 string characters out of 5804047
  1977018 words of memory out of 5000000
- 41808 multiletter control sequences out of 15000+600000
+ 41824 multiletter control sequences out of 15000+600000
  518637 words of font info for 96 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  110i,13n,117p,586b,2085s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.xdv (25 pages, 364980 bytes).
+Output written on main.xdv (27 pages, 385828 bytes).

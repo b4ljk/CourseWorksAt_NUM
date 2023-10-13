@@ -1155,6 +1155,12 @@ INPUT ./src/chapters/chapter3.tex
 INPUT src/chapters/chapter3.tex
 INPUT ./src/chapters/chapter3.tex
 INPUT src/chapters/chapter3.tex
+INPUT ./src/img/dasgal6.png
+INPUT ./src/img/dasgal6.png
+INPUT src/img/dasgal6.png
+INPUT ./src/img/output.png
+INPUT ./src/img/output.png
+INPUT src/img/output.png
 INPUT ./src/appendix.tex
 INPUT ./src/appendix.tex
 INPUT ./src/appendix.tex
