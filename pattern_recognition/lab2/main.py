@@ -23,6 +23,7 @@ def concat_dynamically(items: t.List):
 
 
 image = cv2.imread("skull.tif", -1)
+#
 images_list = []
 for x in range(1, 9):
     divider = 2**x - 1
@@ -38,6 +39,8 @@ cat1 = cv2.hconcat(images_list[:4])
 cat2 = cv2.hconcat(images_list[4:])
 cat = cv2.vconcat([cat1, cat2])
 cv2.imwrite(f"{current_directory}/result/skull.tif", cat)
+# png
+cv2.imwrite(f"{current_directory}/result/skull.png", cat)
 
 # TASK2
 
@@ -134,6 +137,8 @@ bit1 = cv2.bitwise_and(stretched, 0x80)
 cat = cv2.hconcat([gray, stretched, bit1])
 
 cv2.imwrite(f"{current_directory}/result/contrast_stretching/lab3photo.tif", cat)
+# save as png
+cv2.imwrite(f"{current_directory}/result/contrast_stretching/lab3photo.png", cat)
 
 
 # TASK 4 GRAY-LEVEL SLICING
