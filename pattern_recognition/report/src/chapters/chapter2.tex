@@ -23,10 +23,10 @@ for x in range(1, 9):
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[scale=0.3]{src/img/lab2/skull.png}
+	\includegraphics[scale=0.3]{src/../../lab2/result/skull.png}
 	\caption{Spatial and Intensity Resolution Зураг}
 \end{figure}
-	
+
 \pagebreak
 
 \section{Image interpolation}
@@ -64,7 +64,7 @@ for key, _intr in interplotation.items():
 
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.4]{src/img/lab2/rose.png}
+	\includegraphics[scale=0.4]{src/../../lab2/result/rose.png}
 	\caption{Image interpolation Зураг}
 \end{figure}
 
@@ -88,14 +88,14 @@ print(f"Most different index: {most_different_index}")
 
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.4]{src/img/lab2/rose_difference.png}
+	\includegraphics[scale=0.4]{src/../../lab2/result/rose_difference.png}
 	\caption{Ялгааг харуулсан зураг}
 \end{figure}
 
 \pagebreak
 \section{Contrast Stretching}
 
-Contrast Stretching нь зургийн төрөл нь дүрслэх боломжтой пикселийн эрчмийн бүрэн мужийг бүх (0-255) утгуудын хүрээг хамрахын тулд агуулж буй эрчмийн утгуудын мужийг сунгах замаар зургийн тодролыг сайжруулдаг. 
+Contrast Stretching нь зургийн төрөл нь дүрслэх боломжтой пикселийн эрчмийн бүрэн мужийг бүх (0-255) утгуудын хүрээг хамрахын тулд агуулж буй эрчмийн утгуудын мужийг сунгах замаар зургийн тодролыг сайжруулдаг.
 
 Contrast Stretching (ихэвчлэн normalization гэж нэрлэдэг) нь дүрсний тодосгогчийг хүссэн утгын хүрээг хамрахын тулд агуулж буй эрчмийн утгын мужийг "сунгах" замаар дүрсийг сайжруулах энгийн арга юм. Энэ нь илүү боловсронгуй гистограмын тэгшитгэлээс ялгаатай нь зөвхөн зургийн пикселийн утгуудад шугаман scaling функцийг ашигладаг. Үүний үр дүнд "сайжруулалт" нь илүү хатуу биш юм.\cite{contrast}
 
@@ -115,7 +115,7 @@ cv2.imwrite(f"{current_directory}/result/contrast_stretching/lab3photo.tif", cat
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[scale=0.3]{src/img/lab2/lab3photo.png}
+	\includegraphics[scale=0.3]{src/../../lab2/result/contrast_stretching/lab3photo.png}
 	\caption{Contrast Stretching}
 \end{figure}
 
@@ -161,7 +161,7 @@ cv2.imwrite(f"{current_directory}/result/gray_level_slicing/task4.tif", cat)
 
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.38]{src/img/lab2/task4.png}
+	\includegraphics[scale=0.38]{src/../../lab2/result/gray_level_slicing/task4.png}
 	\caption{Gray-Level Slicing}
 \end{figure}
 
@@ -195,7 +195,7 @@ cv2.imwrite(f"{current_directory}/result/bitplaneslicing/task5.tif", final_image
 \end{lstlisting}
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.65]{src/img/lab2/task5.png}
+	\includegraphics[scale=0.65]{src/../../lab2/result/bitplaneslicing/task5.png}
 	\caption{Bit-plane slicing}
 \end{figure}
 
