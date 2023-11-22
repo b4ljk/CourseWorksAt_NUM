@@ -19,5 +19,7 @@
 \contentsline {section}{\numberline {3.1}Histogram Processing}{18}{section.3.1}%
 \contentsline {subsection}{\numberline {3.1.1}Histogram Processing}{18}{subsection.3.1.1}%
 \contentsline {subsection}{\numberline {3.1.2}Монотон функц}{18}{subsection.3.1.2}%
-\contentsline {part}{ХАВСРАЛТ}{21}{figure.caption.9}%
-\contentsline {chapter}{\numberline {A.}\uppercase {Жишээ зурагнууд}}{21}{appendix.A}%
+\contentsline {section}{\numberline {3.2}Local Enhancement}{21}{section.3.2}%
+\contentsline {section}{\numberline {3.3}OR/AND}{22}{section.3.3}%
+\contentsline {part}{ХАВСРАЛТ}{25}{figure.caption.13}%
+\contentsline {chapter}{\numberline {A.}\uppercase {Жишээ зурагнууд}}{25}{appendix.A}%

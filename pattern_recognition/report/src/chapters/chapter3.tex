@@ -25,13 +25,74 @@ x ≤ y бол f\(x\) ≤ f\(y\) бол монотон өсөх (эсвэл эн
 нь энгийн, урьдчилан таамаглаж болохуйц тул математик
 болон янз бүрийн салбарт хэрэгтэй\cite{monoton}.
 
-\begin{figure}[h!]
+\begin{figure}
     \centering
     \includegraphics[scale=0.7]{src/img/dasgal6.png}
     \caption{Histogram}
 \end{figure}
-\begin{figure}[h!]
+\begin{figure}
     \centering
     \includegraphics[scale=0.7]{src/img/output.png}
     \caption{Histogram equalized}
+\end{figure}
+
+\newpage
+\section{Local Enhancement}
+Local Enhancement нь зургийн чанарыг сайжруулахын тулд зураг боловсруулахад
+ашигладаг техник юм. Зургийг бүхэлд нь биш харин жижиг хэсгүүдийн
+пикселүүдийг өөрчилснөөр зургийн contrast-г сайжруулдаг тул үүнийг Local Enhancement гэж нэрлэдэг.
+
+\begin{enumerate}
+    \item Зураг хуваах: Зургийг жижиг, давхцахгүй хавтан болгон хуваана.
+    \item Гистограмыг тооцоолох: Хавтан тус бүрийн пикселийн эрчимжилтийн тархалтыг тооцоол.
+    \item Ялгааг хязгаарлах: Noise нэмэгдүүлэхээс сэргийлэхийн тулд гистограммыг тодорхой утгаар таслана.
+    \item Гистограммыг тэгшитгэх: Ялгааг сайжруулахын тулд хавтан бүрт пикселийн эрчмийг тараана.
+    \item Интерполяци: Хоёр шугаман интерполяцыг ашиглан хавтангийн хилийг тэгшлэнэ.
+    \item Нэгтгэх: Хавтангуудыг хооронд нь холбож, эцсийн, сайжруулсан дүрсийг бүрдүүлнэ.
+\end{enumerate}
+
+
+\begin{lstlisting}[language=Python, caption=Local Enhancement, frame=single]
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+img = cv2.imread('chap3/Fig0326(a)(embedded_square_noisy_512).tif', 0)
+
+clahe: cv2.CLAHE = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(3,3))
+enhanced = clahe.apply(img)
+equalization = np.uint8(enhanced * 250) # type: ignore
+
+fig, axs = plt.subplots(2, 2, figsize=(10, 10))
+
+axs[0, 0].imshow(img, cmap='gray')
+axs[0, 1].imshow(enhanced, cmap='gray')
+axs[1, 0].imshow(equalization, cmap='gray')
+\end{lstlisting}
+
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.3]{src/img/daalgavar7.png}
+    \caption{Local Enhancement}
+\end{figure}
+
+\section[OR/AND]{Enhancement using Arithmetic / Logic Operations}
+% Зураг нь ардаа битүүдээр дүрслэгдсэн байгаа ба
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.7]{src/img/dasgal8.png}
+    \caption{Arithmetic / Logic Operations}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.3]{src/img/dasgal9.png}
+    \caption{Smoothing linear filters}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.32]{src/img/dasgal10.png}
+    \caption{Smoothing Linear Filters}
 \end{figure}

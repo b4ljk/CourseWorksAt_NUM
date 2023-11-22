@@ -1,6 +1,6 @@
 INFO:  latexindent version 3.20.3, 2023-02-19, a script to indent .tex files
        latexindent lives here: /usr/local/texlive/2023/texmf-dist/scripts/latexindent/
-       Fri Oct 13 11:54:11 2023
+       Fri Nov 17 12:30:35 2023
        Filename: /Users/baljinnyam/coding/Lecture_at_NUM/pattern_recognition/report/src/chapters/__latexindent_temp_chapter3.tex
 INFO:  Processing switches:
        -y|--yaml: YAML settings specified via command line

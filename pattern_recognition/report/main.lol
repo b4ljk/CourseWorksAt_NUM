@@ -7,3 +7,4 @@
 \contentsline {lstlisting}{\numberline {2.4}{\ignorespaces Contrast Stretching}}{12}{lstlisting.2.4}%
 \contentsline {lstlisting}{\numberline {2.5}{\ignorespaces Gray-Level Slicing}}{13}{lstlisting.2.5}%
 \contentsline {lstlisting}{\numberline {2.6}{\ignorespaces Bit-plane slicing}}{15}{lstlisting.2.6}%
+\contentsline {lstlisting}{\numberline {3.1}{\ignorespaces Local Enhancement}}{21}{lstlisting.3.1}%
