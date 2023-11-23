@@ -21,5 +21,8 @@
 \contentsline {subsection}{\numberline {3.1.2}Монотон функц}{18}{subsection.3.1.2}%
 \contentsline {section}{\numberline {3.2}Local Enhancement}{21}{section.3.2}%
 \contentsline {section}{\numberline {3.3}OR/AND}{22}{section.3.3}%
-\contentsline {part}{ХАВСРАЛТ}{25}{figure.caption.13}%
-\contentsline {chapter}{\numberline {A.}\uppercase {Жишээ зурагнууд}}{25}{appendix.A}%
+\contentsline {section}{\numberline {3.4}SLF}{23}{section.3.4}%
+\contentsline {subsubsection}{Box Filter (or Mean Filter)}{24}{section*.12}%
+\contentsline {subsubsection}{Gaussian Filter}{24}{section*.13}%
+\contentsline {part}{ХАВСРАЛТ}{26}{figure.caption.15}%
+\contentsline {chapter}{\numberline {A.}\uppercase {Жишээ зурагнууд}}{26}{appendix.A}%
