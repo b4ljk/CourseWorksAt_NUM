@@ -1,6 +1,6 @@
 # Courses done at National University of Mongolia
 
-## Complete list of Courses
+## Complete list of Courses with homeworks
 
 1. [Data structures](https://github.com/b4ljk/Lecture_at_NUM/tree/main/dataStructure)
 2. [Introduction to C](https://github.com/b4ljk/Lecture_at_NUM/tree/main/Introduction%20to%20C)
